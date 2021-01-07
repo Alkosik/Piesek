@@ -11,5 +11,8 @@
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
     "discord.js": "^12.5.1"
+  },
+  "engines": {
+    "node": "12.19.0"
   }
 }
