@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const token = process.env.TOKEN;
+const http = require("http");
 
 client.once('ready', () => {
     console.log('READY');
@@ -24,4 +25,11 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     }
 });
 
-client.listen(process.env.PORT);
+http
+  .createServer((request, response) => {
+    response.writeHead(200, { "Content-Type": "text/plain" });
+    response.write("Gang Słoni Dev Team");
+    response.end();
+  })
+  .listen(process.env.PORT);
+console.log("Server listening on port" + process.env.PORT);
