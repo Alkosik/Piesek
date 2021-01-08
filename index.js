@@ -27,10 +27,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     }
 });
 
-client.setActivity("Gang Słoni", {
-    type: "STREAMING",
-    url: "https://gangsloni.pl"
-});
+client.user.setPresence({ game: { name: 'Gang Słoni', type: "streaming", url: "https://gangsloni.pl"}});
 
 http
   .createServer((request, response) => {
