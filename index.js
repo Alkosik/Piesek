@@ -27,7 +27,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     }
 });
 
-client.user.setActivity("Gang Słoni", {
+client.setActivity("Gang Słoni", {
     type: "STREAMING",
     url: "https://gangsloni.pl"
 });
