@@ -23,3 +23,5 @@ client.on('voiceStateUpdate', (oldState, newState) => {
         channel.leave();
     }
 });
+
+client.listen(process.env.PORT);
