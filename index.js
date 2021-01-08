@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const token = process.env.TOKEN;
 const http = require("http");
+const utf8 = require('utf8');
+
 
 client.once('ready', () => {
     console.log('READY');
@@ -28,7 +30,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 http
   .createServer((request, response) => {
     response.writeHead(200, { "Content-Type": "text/plain" });
-    response.write("Gang Słoni Dev Team");
+    response.write(utf8.encode("Gang Słoni Dev Team"));
     response.end();
   })
   .listen(process.env.PORT);
