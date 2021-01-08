@@ -7,6 +7,14 @@ const utf8 = require('utf8');
 
 client.once('ready', () => {
     console.log('READY');
+    client.user.setPresence({
+        status: 'online',
+        activity: {
+            name: "Gang Słoni",
+            type: "STREAMING",
+            url: "http://gangsloni.pl"
+        }
+    });
 });
 
 client.login(token);
@@ -27,7 +35,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     }
 });
 
-client.user.setPresence({ game: { name: 'Gang Słoni', type: "streaming", url: "https://gangsloni.pl"}});
+//client.user.setPresence({ game: { name: 'Gang Słoni', type: "streaming", url: "https://gangsloni.pl"}});
 
 http
   .createServer((request, response) => {
