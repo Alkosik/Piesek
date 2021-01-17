@@ -68,7 +68,7 @@ client.on('message', message => {
 connection.query(`SELECT * FROM account WHERE id = '${message.author.id}'`, function (err, rows) { //selecting user id
     if (err) throw err;
 
-    connection.end(rows);
+    connection.pause(rows);
 
 
     //let createTables = `CREATE TABLE IF NOT EXISTS account`;
@@ -94,7 +94,7 @@ connection.query(`SELECT * FROM account WHERE id = '${message.author.id}'`, func
             message.channel.send(lvlup)
             }
     }
-
+    connection.resume();
 connection.query(sql)
 })
 });
