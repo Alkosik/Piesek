@@ -70,6 +70,7 @@ connection.query(`SELECT * FROM account WHERE id = '${message.author.id}'`, func
     let createTables = `CREATE TABLE IF NOT EXISTS account`;
 
     if(rows.length < 1) { //if the user has no info in table | no id it inserts ID - XP - LEVEL 
+        let lvl = 0;
         sql = `INSERT INTO account (id, xp, level) VALUES ('${message.author.id}', '${generateXp()}', ${lvl})`
     } else {
             let xp = rows[0].xp; //xp = the amount xp in database
