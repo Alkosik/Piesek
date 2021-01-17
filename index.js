@@ -67,6 +67,8 @@ client.on('message', message => {
 connection.query(`SELECT * FROM account WHERE id = '${message.author.id}'`, function (err, rows) { //selecting user id
     if (err) throw err;
 
+    let createTables = `CREATE TABLE IF NOT EXISTS account`;
+
     if(rows.length < 1) { //if the user has no info in table | no id it inserts ID - XP - LEVEL 
         sql = `INSERT INTO account (id, xp, level) VALUES ('${message.author.id}', '${generateXp()}', ${lvl})`
     } else {
@@ -89,6 +91,6 @@ connection.query(`SELECT * FROM account WHERE id = '${message.author.id}'`, func
             }
     }
 
-connection.query(sql)
+connection.query(createTables, sql)
 })
 });
