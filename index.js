@@ -142,7 +142,7 @@ client.on('message', message => {
             console.error(error);
             message.reply('Egzekucja komendy zakonczyla sie niepowodzeniem!');
         }
-        
+
         message.delete();
     }
 })
