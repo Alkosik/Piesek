@@ -61,7 +61,7 @@ http
 console.log("Server listening on port:" + process.env.PORT);
 
 
-
+client.on('message', message => {
 
 connection.query(`SELECT * FROM account WHERE id = '${message.author.id}'`, function (err, rows) { //selecting user id
     if (err) throw err;
@@ -90,3 +90,4 @@ connection.query(`SELECT * FROM account WHERE id = '${message.author.id}'`, func
 
 connection.query(sql)
 })
+});
