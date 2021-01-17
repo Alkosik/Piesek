@@ -9,7 +9,8 @@ const mysql = require('mysql');
 const connection = mysql.createConnection({
     host: process.env.HOST,
     user: process.env.USER,
-    password: process.env.PASSWORD
+    password: process.env.PASSWORD,
+    database: "www5056_gsmaindb"
   });
 
 let levelup = 15; // Level Up EXP
