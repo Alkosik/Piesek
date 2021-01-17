@@ -11,8 +11,10 @@
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
     "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
     "ffmpeg": "0.0.4",
     "mysql": "^2.18.1",
+    "nodemon": "^2.0.7",
     "utf8": "^3.0.0"
   },
   "engines": {
