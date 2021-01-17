@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
     password: process.env.PASSWORD
   });
 
-let levelup = 1500; // Level Up EXP
+let levelup = 15; // Level Up EXP
 let purple = `RANDOM`;
 
 function generateXp() { //Generating EXP
