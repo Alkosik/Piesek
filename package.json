@@ -12,6 +12,7 @@
     "@discordjs/opus": "^0.3.3",
     "discord.js": "^12.5.1",
     "ffmpeg": "0.0.4",
+    "mysql": "^2.18.1",
     "utf8": "^3.0.0"
   },
   "engines": {
