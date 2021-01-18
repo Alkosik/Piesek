@@ -17,6 +17,8 @@ const mysql = require('mysql');
 const {
     connect
 } = require('http2');
+const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
+//const asyncio = require('asyncio');
 
 const connection = mysql.createConnection({
     host: process.env.HOST,
@@ -137,12 +139,14 @@ client.on('message', message => {
         const command = client.commands.get(commandName);
 
         try {
-            command.execute(message, args);
+            command.execute(message, args, connection);
         } catch (error) {
             console.error(error);
             message.reply('Egzekucja komendy zakonczyla sie niepowodzeniem!');
         }
-
-        message.delete();
+        (async () => {
+            await snooze(3000);
+            message.delete();
+        })();
     }
 })
