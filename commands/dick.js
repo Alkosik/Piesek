@@ -2,7 +2,7 @@ module.exports = {
 	name: 'dick',
 	description: 'Długość dicka',
 	execute(message, args) {
-		if (message.author.username === 'Alkosik'){
+		if (message.author.username === 'Alkosik') {
 			return message.reply('alkosik muj pan ma 69cm w dicku')
 		}
 		let dick_lenght = Math.random() * (24 - 0.1) + 0.1;

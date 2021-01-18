@@ -6,7 +6,7 @@ module.exports = {
 			if (err) throw err;
 			console.log(rows);
 			let saved_gender = rows[0].gender
-			if(saved_gender === 0){
+			if (saved_gender === 0) {
 				let rn = Math.random() * (17 - 1) + 1;
 				let rounded_rn = Math.floor(rn);
 				sql = `UPDATE account SET gender = ${rounded_rn} WHERE id = '${message.author.id}'`;
@@ -19,7 +19,7 @@ module.exports = {
 			}
 
 
-			function send_response(){
+			function send_response() {
 				if (err) throw err;
 				switch (saved_gender) {
 					case 1: {

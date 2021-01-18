@@ -7,13 +7,13 @@ module.exports = {
 	description: 'ass!',
 	execute(message, args) {
 		(async () => {
-		let desire = args[0]
-		const image = await nsfw.ass();
-		const embed = new Discord.MessageEmbed()
-    	.setTitle(`NSFW`)
-    	.setColor("RED")
-    	.setImage(image);
-		message.channel.send(embed);
+			let desire = args[0]
+			const image = await nsfw.ass();
+			const embed = new Discord.MessageEmbed()
+				.setTitle(`NSFW`)
+				.setColor("RED")
+				.setImage(image);
+			message.channel.send(embed);
 		})();
 	},
 };
