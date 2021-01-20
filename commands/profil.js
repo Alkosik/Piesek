@@ -2,8 +2,11 @@ module.exports = {
 	name: 'profil',
 	description: 'Profil!',
 	execute(message, args, connection) {
-		const sex = require('../data.json');
-		const values = Object.values(sex)
+		const genders = require('../json/genders.json');
+		const gender_values = Object.values(genders);
+		const hobbies = require('../json/hobbies.json');
+		const hobbies_values = Object.values(hobbies);
+		const Discord = require('discord.js');
 
 		let msg;
 		
@@ -18,7 +21,7 @@ module.exports = {
 					(async () => {
 
 						msg = await message.channel.send("Rozpoczynanie kreacji profilu...");
-						let rand1 = Math.random() * (60 - 1) + 1;
+						let rand1 = Math.random() * (60 - 7) + 7;
 						let rounded_rand1 = Number(rand1.toFixed(1));
 						role_age = rounded_rand1;
 
@@ -26,12 +29,40 @@ module.exports = {
 						let rounded_rand2 = Number(rand2.toFixed(1));
 						role_height = rounded_rand2;
 
-						const randomValue = values[parseInt(Math.random() * values.length)]
-						console.log(randomValue);
+						let rand3 = Math.random() * (200 - 30) + 30;
+						let rounded_rand3 = Number(rand3.toFixed(1));
+						role_weight = rounded_rand3;
+
+						const role_gender = gender_values[parseInt(Math.random() * gender_values.length)]
+						console.log(role_gender);
+
+						//if(randomValue !== "Kobieta" && randomValue !== "Podkobieta"){
+						let rand4 = Math.random() * (24 - 1) + 1;
+						let rounded_rand4 = Number(rand4.toFixed(1));
+						role_dicklenght = rounded_rand4 + "cm";
+						//} else {
+							//role_dicklenght = "Brak"
+						//}
+						const role_hobbies = hobbies_values[parseInt(Math.random() * hobbies_values.length)]
+						console.log(role_hobbies);
 						
 						setTimeout(() => {
 							// Edit msg 20 seconds later
-							msg.edit("Wygenerowano: Wiek - " + role_age + " Wzrost - " + role_height + " Płeć - " + randomValue);
+							//msg.edit("Wygenerowano: Wiek - " + role_age + " lat, Wzrost - " + role_height + "cm, Płeć - " + randomValue + ", Waga - " + role_weight + "kg.");
+							const ProfileEmbed = new Discord.MessageEmbed()
+							.setColor('RED')
+							.setTitle(message.author.username)
+							.setThumbnail(message.author.avatarURL())
+							.addFields(
+								{ name: 'Wiek', value: role_age + " lat", inline: true },
+								{ name: 'Wzrost', value: role_height + "cm", inline: true },
+								{ name: 'Waga', value: role_weight + "kg", inline: true },
+								{ name: 'Płeć', value: role_gender + "", inline: true },
+								{ name: 'Długość dicka/Szerokość pochwy', value: role_dicklenght, inline: true },
+								{ name: 'Hobby', value: role_hobbies, inline: true}
+							)
+							msg.delete;
+							message.channel.send(ProfileEmbed);
 						}, 2000);
 
 					})();
