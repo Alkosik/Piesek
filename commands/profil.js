@@ -47,7 +47,7 @@ module.exports = {
 						console.log(role_hobbies);
 						
 						setTimeout(() => {
-							// Edit msg 20 seconds later
+							/// Edit msg 20 seconds later
 							//msg.edit("Wygenerowano: Wiek - " + role_age + " lat, Wzrost - " + role_height + "cm, Płeć - " + randomValue + ", Waga - " + role_weight + "kg.");
 							const ProfileEmbed = new Discord.MessageEmbed()
 							.setColor('RED')
@@ -63,9 +63,37 @@ module.exports = {
 							)
 							msg.delete;
 							message.channel.send(ProfileEmbed);
+							console.log(rows)
 						}, 2000);
 
+						//sql = `INSERT INTO account (rp, rp_age, rp_gender, rp_height, rp_dicklenght) VALUES ('1', '${role_age}', '${role_gender}', '${role_height}', '${role_dicklenght}')`
+						sqlquery = `UPDATE account SET rp = '1', rp_age = '${role_age}', rp_gender = '${role_gender}', rp_height = '${role_height}', rp_dicklenght = '${role_dicklenght}', rp_weight = '${role_weight}', rp_hobbies = '${role_hobbies}' WHERE id = '${message.author.id}'`
+						connection.query(sqlquery);
 					})();
+				} else {
+					
+					(async () => {
+					msg = await message.channel.send("Pobieranie danych z bazy...");
+					setTimeout(() => {
+						/// Edit msg 20 seconds later
+						//msg.edit("Wygenerowano: Wiek - " + role_age + " lat, Wzrost - " + role_height + "cm, Płeć - " + randomValue + ", Waga - " + role_weight + "kg.");
+						const ProfileEmbed = new Discord.MessageEmbed()
+						.setColor('RED')
+						.setTitle(message.author.username)
+						.setThumbnail(message.author.avatarURL())
+						.addFields(
+							{ name: 'Wiek', value: rows[0].rp_age + " lat", inline: true },
+							{ name: 'Wzrost', value: rows[0].rp_height + "cm", inline: true },
+							{ name: 'Waga', value: rows[0].rp_weight + "kg", inline: true },
+							{ name: 'Płeć', value: rows[0].rp_gender + "", inline: true },
+							{ name: 'Długość dicka/Szerokość pochwy', value: rows[0].rp_dicklenght + 'cm', inline: true },
+							{ name: 'Hobby', value: rows[0].rp_hobbies, inline: true}
+						)
+						msg.delete;
+						message.channel.send(ProfileEmbed);
+						console.log(rows)
+					}, 2000);
+				})();
 				}
 			});
 		})();

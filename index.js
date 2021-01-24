@@ -103,7 +103,7 @@ client.on('message', message => {
             } else {
                 originalXp = rows[0].xp;
                 updatedXp = originalXp + generateXp();
-                sql = `UPDATE account SET xp = ${updatedXp} WHERE id = '${message.author.id}'`;
+                sql = `UPDATE account SET xp = ${updatedXp}, username = '${message.author.username}' WHERE id = '${message.author.id}'`;
 
                 let nxtLvl = rows[0].level * levelup; //how many +1 level per xp points
 
