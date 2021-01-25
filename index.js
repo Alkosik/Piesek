@@ -114,6 +114,7 @@ client.on('message', message => {
                 //levelup message 
                 if (nxtLvl <= rows[0].xp) {
                     const lvlup = new Discord.MessageEmbed()
+                        .setThumbnail(message.author.avatarURL())
                         .setDescription(`muj boze, ${message.author.username} wbiles poziom ${rows[0].level + 1}`)
                         .setColor(purple)
                     message.channel.send(lvlup)
