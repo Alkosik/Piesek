@@ -117,11 +117,11 @@ client.on('message', message => {
                         .setThumbnail('i.imgur.com/a/GcEhHbS.png')
                         .setDescription(`muj boze, ${message.author.username} wbiles poziom ${rows[0].level + 1}`)
                         .setColor(purple)
-                    let lvlupmsg = message.channel.send(lvlup)
-                    (async () => {
-                        await snooze(10000);
-                        lvlupmsg.delete();
-                    })();
+                        (async () => {
+                            lvlupmsg = await message.channel.send(lvlup);
+                            await snooze(10000);
+                            lvlupmsg.delete
+                        })();
                 }
             }
 
@@ -158,62 +158,64 @@ client.on('message', message => {
 })
 
 client.on('message', message => {
-	if (message.content === '!join') {
-		client.emit('guildMemberAdd', message.member);
-	}
+    if (message.content === '!join') {
+        client.emit('guildMemberAdd', message.member);
+    }
 });
 
 client.on('guildMemberAdd', async member => {
-	const channel = member.guild.channels.cache.find(ch => ch.id === '511224486545326100');
-	if (!channel) return;
+    const channel = member.guild.channels.cache.find(ch => ch.id === '511224486545326100');
+    if (!channel) return;
 
-	const canvas = Canvas.createCanvas(700, 250);
-	const ctx = canvas.getContext('2d');
+    const canvas = Canvas.createCanvas(700, 250);
+    const ctx = canvas.getContext('2d');
 
-	const background = await Canvas.loadImage('./images/background.png');
-	ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    const background = await Canvas.loadImage('./images/background.png');
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
-	ctx.strokeStyle = '#74037b';
-	ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = '#74037b';
+    ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
-	// Slightly smaller text placed above the member's display name
-	ctx.font = '38px Cascadia Code';
-	ctx.fillStyle = '#ffffff';
-	ctx.fillText('Witaj na serwerze,', canvas.width / 2.5, canvas.height / 3.5);
+    // Slightly smaller text placed above the member's display name
+    ctx.font = '38px Cascadia Code';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('Witaj na serwerze,', canvas.width / 2.5, canvas.height / 3.5);
 
-	// Add an exclamation point here and below
-	const applyText = (canvas, text) => {
+    // Add an exclamation point here and below
+    const applyText = (canvas, text) => {
         const ctx = canvas.getContext('2d');
-    
+
         // Declare a base size of the font
         let fontSize = 70;
-    
+
         do {
             // Assign the font to the context and decrement it so it can be measured again
             ctx.font = `${fontSize -= 10}px Cascadia Code`;
             // Compare pixel width of the text to the canvas minus the approximate avatar size
         } while (ctx.measureText(text).width > canvas.width - 300);
-    
+
         // Return the result to use in the actual canvas
         return ctx.font;
     };
     ctx.fillStyle = '#ffffff';
-    if(member.displayName.length <= 8){
+    if (member.displayName.length <= 8) {
         ctx.font = '46px Cascadia Code';
     } else {
         ctx.font = '38px Cascadia Code';
     }
-	ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8); //2.5, 1.8
+    ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8); //2.5, 1.8
 
-	ctx.beginPath();
-	ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
-	ctx.closePath();
-	ctx.clip();
+    ctx.beginPath();
+    ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.clip();
 
-	const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png' }));
-	ctx.drawImage(avatar, 25, 25, 200, 200);
+    const avatar = await Canvas.loadImage(member.user.displayAvatarURL({
+        format: 'png'
+    }));
+    ctx.drawImage(avatar, 25, 25, 200, 200);
 
-	const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
+    const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
-	channel.send(`Witamy na serwerze, ${member}!`, attachment);
+    channel.send(`Witamy na serwerze, ${member}!`, attachment);
 });
