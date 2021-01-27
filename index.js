@@ -118,7 +118,10 @@ client.on('message', message => {
                         .setDescription(`muj boze, ${message.author.username} wbiles poziom ${rows[0].level + 1}`)
                         .setColor(purple)
                     let lvlupmsg = message.channel.send(lvlup)
-                    lvlupmsg.delete(5000);
+                    (async () => {
+                        await snooze(10000);
+                        lvlupmsg.delete();
+                    })();
                 }
             }
 
