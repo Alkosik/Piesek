@@ -116,7 +116,7 @@ client.on('message', message => {
                     (async () => {
                         const attachment = new Discord.Attachment('./images/logo.png', 'logo.png');
                         const lvlup = new Discord.MessageEmbed()
-                            .setThumbnail('attachment://logo.png')
+                            .setThumbnail('https://i.ibb.co/KWN7Qwz/Layer-1.png')
                             .setDescription(`muj boze, ${message.author.username} wbiles poziom ${rows[0].level + 1}`)
                             .setColor(purple);
                         lvlupmsg = await message.channel.send(lvlup);
