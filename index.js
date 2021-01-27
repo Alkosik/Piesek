@@ -113,11 +113,11 @@ client.on('message', message => {
 
                 //levelup message 
                 if (nxtLvl <= rows[0].xp) {
+                    (async () => {
                     const lvlup = new Discord.MessageEmbed()
                         .setThumbnail('i.imgur.com/a/GcEhHbS.png')
                         .setDescription(`muj boze, ${message.author.username} wbiles poziom ${rows[0].level + 1}`)
-                        .setColor(purple)
-                        (async () => {
+                        .setColor(purple);
                             lvlupmsg = await message.channel.send(lvlup);
                             await snooze(10000);
                             lvlupmsg.delete
