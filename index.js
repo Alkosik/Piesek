@@ -114,8 +114,7 @@ client.on('message', message => {
                 //levelup message 
                 if (nxtLvl <= rows[0].xp) {
                     (async () => {
-                        const attachment = new Discord
-                            .MessageAttachment('./images/logo.png', 'logo.png');
+                        const attachment = new Discord.Attachment('./images/logo.png', 'logo.png');
                         const lvlup = new Discord.MessageEmbed()
                             .setThumbnail('attachment://logo.png')
                             .setDescription(`muj boze, ${message.author.username} wbiles poziom ${rows[0].level + 1}`)
