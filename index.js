@@ -19,6 +19,8 @@ const {
 } = require('http2');
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 const Canvas = require('canvas');
+var schedule = require('node-schedule');
+const { kill } = require('process');
 //const asyncio = require('asyncio');
 
 const connection = mysql.createConnection({
@@ -219,4 +221,52 @@ client.on('guildMemberAdd', async member => {
     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
     channel.send(`Witamy na serwerze, ${member}!`, attachment);
+});
+
+//////////////////////
+//                  //
+//  THE MAIN EVENT  //
+//                  //
+//////////////////////
+let saved_channel;
+let user_connected;
+
+client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => { // Listeing to the voiceStateUpdate event
+    (async () => {
+        if (newVoiceState.channel) { // The member connected to a channel.
+            user_connected = true;
+            saved_channel = newVoiceState.channel;
+            console.log(`${newVoiceState.member.user.tag} connected to ${newVoiceState.channel.name}.`);
+            start_timer();
+        } else if (oldVoiceState.channel) { // The member disconnected from a channel.
+            user_connected = false;
+            saved_channel = null;
+            console.log(`${oldVoiceState.member.user.tag} disconnected from ${oldVoiceState.channel.name}.`)
+        };
+    })();
+});
+
+function start_timer(){
+    (async () => {
+        console.log("Timer started.")
+        await snooze(5000);
+        if(user_connected === true){
+            console.log("Points added.")
+        } else {
+            console.log("No points added.")
+        }
+        console.log("time ended");
+
+    })();
+}
+
+
+
+
+var j = schedule.scheduleJob('timer_job', '1/1 * * * * *', function () { // this for one hour
+    (async () => {
+
+        //console.log("tf")
+
+    })();
 });
