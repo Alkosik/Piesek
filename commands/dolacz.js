@@ -26,12 +26,12 @@ module.exports = {
 					connection.query(sql);
 					(async () => {
 						await snooze(2500);
-						msg1.edit("Zostales zarejestrowany w konkursie.");
+						msg1.edit(`Zostales zarejestrowany w konkursie. - ${message.author}`);
 					})();
 				} else {
 					(async () => {
 						await snooze(2500);
-						msg1.edit("Byłeś już zarejestowany.");
+						msg1.edit(`Byłeś już zarejestowany. - ${message.author}`);
 					})();
 				}
 
