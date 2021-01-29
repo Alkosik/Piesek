@@ -155,6 +155,16 @@ client.on('message', message => {
 
                             originalPoints = rows[0].points;
                             updatedPoints = originalPoints + 1;
+
+                            const Guild = client.guilds.cache.get("510941195267080214");
+                            const conn_member = Guild.members.cache.get(message.author.id);
+
+                            if (conn_member.voice.channel) { 
+                                updatedPoints + 1;
+                                console.log('sex');
+                                //console.log(`${Member.user.tag} is connected to ${Member.voice.channel.name}!`);
+                            }
+
                             sql = `UPDATE acc_event SET points = ${updatedPoints} WHERE id = '${message.author.id}'`;
     
                             connection.query(sql);
