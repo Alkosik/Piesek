@@ -16,7 +16,7 @@ module.exports = {
 				
 				let updatedPoints;
 
-				if (rows.length < 1) {
+				if (rows.length <= 1) {
 					(async () => {
 						await snooze(2500);
 						msg1.edit("Zapisywanie danych w bazie...");
