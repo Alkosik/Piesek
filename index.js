@@ -14,13 +14,17 @@ const token = process.env.TOKEN;
 const http = require("http");
 const utf8 = require('utf8');
 const mysql = require('mysql');
+const cooldowns = new Discord.Collection();
+const talkedRecently = new Set();
 const {
     connect
 } = require('http2');
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 const Canvas = require('canvas');
 var schedule = require('node-schedule');
-const { kill } = require('process');
+const {
+    kill
+} = require('process');
 //const asyncio = require('asyncio');
 
 const connection = mysql.createConnection({
@@ -137,7 +141,41 @@ client.on('message', message => {
                 message.member.roles.add(role);
             }
 
+            connection.query(`SELECT * FROM acc_event WHERE id = ${message.author.id}`, function (err, rows) {
+                if (err) throw err;
+
+                if (rows.length >= 1) {
+                    (async () => {
+
+                        if (talkedRecently.has(message.author.id)) {
+                            return;
+                        } else {
+
+                            console.log(`Signature confirmed. - ${message.author.username}`);
+
+                            originalPoints = rows[0].points;
+                            updatedPoints = originalPoints + 1;
+                            sql = `UPDATE acc_event SET points = ${updatedPoints} WHERE id = '${message.author.id}'`;
+    
+                            connection.query(sql);
+
+                            // Adds the user to the set so that they can't talk for a minute
+                            talkedRecently.add(message.author.id);
+                            setTimeout(() => {
+                                
+                                talkedRecently.delete(message.author.id);
+                            }, 20000);
+                        }
+
+                    })();
+                }
+
+            })
+
         })
+
+
+
     } else if (!message.author.bot) {
 
         const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -246,19 +284,19 @@ client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => { // Listeing to
     })();
 });
 
-function start_timer(){
-    (async () => {
-        console.log("Timer started.")
-        await snooze(5000);
-        if(user_connected === true){
-            console.log("Points added.")
-        } else {
-            console.log("No points added.")
-        }
-        console.log("time ended");
+// function start_timer(){
+//     (async () => {
+//         console.log("Timer started.")
+//         await snooze(5000);
+//         if(user_connected === true){
+//             console.log("Points added.")
+//         } else {
+//             console.log("No points added.")
+//         }
+//         console.log("time ended");
 
-    })();
-}
+//     })();
+// }
 
 
 
