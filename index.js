@@ -1,5 +1,8 @@
 const fs = require('fs');
 const Discord = require('discord.js');
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
 const {
     prefix
 } = require('./config.json');
@@ -27,6 +30,9 @@ const {
 } = require('process');
 //const asyncio = require('asyncio');
 
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({extended: false}));
+
 const connection = mysql.createConnection({
     host: process.env.HOST,
     user: process.env.USER,
@@ -50,13 +56,13 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
-    console.log('READY');
+    console.log('Discord connection established!');
     client.user.setPresence({
         status: 'online',
         activity: {
             name: "Gang Słoni",
             type: "STREAMING",
-            url: "http://gangsloni.pl"
+            url: "https://www.twitch.tv/alkosik_"
         }
     });
 });
@@ -90,7 +96,7 @@ http
         response.end();
     })
     .listen(process.env.PORT);
-console.log("Server listening on port:" + process.env.PORT);
+console.log("Server listening on port: " + process.env.PORT);
 
 
 client.on('message', message => {
@@ -120,7 +126,7 @@ client.on('message', message => {
                 //levelup message 
                 if (nxtLvl <= rows[0].xp) {
                     (async () => {
-                        const attachment = new Discord.Attachment('./images/logo.png', 'logo.png');
+                        //const attachment = new Discord.Attachment('./images/logo.png', 'logo.png');
                         const lvlup = new Discord.MessageEmbed()
                             .setThumbnail('https://i.ibb.co/KWN7Qwz/Layer-1.png')
                             .setDescription(`muj boze, ${message.author.username} wbiles poziom ${rows[0].level + 1}`)
@@ -196,7 +202,7 @@ client.on('message', message => {
         const command = client.commands.get(commandName);
 
         try {
-            command.execute(message, args, connection);
+            command.execute(message, args, connection, client, Discord);
         } catch (error) {
             console.error(error);
             message.reply('Egzekucja komendy zakonczyla sie niepowodzeniem!');
@@ -311,9 +317,24 @@ client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => { // Listeing to
 
 
 
-var j = schedule.scheduleJob('timer_job', '1/1 * * * * *', function () { // this for one hour
+var j = schedule.scheduleJob('0 12 1 * *', function () {
     (async () => {
+        connection.query(`SELECT * FROM acc_event WHERE points=(SELECT MAX(points) FROM acc_event)`, function (err, rows) {
+                if (err) throw err;
 
+                const embed = new Discord.MessageEmbed()
+                            .setImage('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')
+							.setTitle(`Aktualnie najwięcej punktów ma ${rows[0].username}`)
+							.setDescription(`Tabela wyników kiedyś będzie dostępna na https://hauhau.herokuapp.com`)
+                            .setColor('#4d33de');
+
+
+                client.channels.cache.get('747933354468573194').send(embed);
+            console.log(rows);
+
+
+
+        })
         //console.log("tf")
 
     })();
