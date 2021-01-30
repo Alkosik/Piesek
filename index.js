@@ -128,7 +128,7 @@ client.on('message', message => {
                     (async () => {
                         //const attachment = new Discord.Attachment('./images/logo.png', 'logo.png');
                         const lvlup = new Discord.MessageEmbed()
-                            .setThumbnail('https://i.ibb.co/KWN7Qwz/Layer-1.png')
+                            .setThumbnail('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')
                             .setDescription(`muj boze, ${message.author.username} wbiles poziom ${rows[0].level + 1}`)
                             .setColor(purple);
                         lvlupmsg = await message.channel.send(lvlup);
@@ -329,7 +329,7 @@ var j = schedule.scheduleJob('0 12 1 * *', function () {
                             .setColor('#4d33de');
 
 
-                client.channels.cache.get('747933354468573194').send(embed);
+                client.channels.cache.get('510941195929649153').send(embed);
             console.log(rows);
 
 
