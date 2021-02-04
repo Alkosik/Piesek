@@ -3,7 +3,7 @@ module.exports = {
 	description: 'Ranking!',
 	execute(message, args, connection, client, Discord) {
 		(async () => {
-			connection.query(`SELECT username, points FROM acc_event ORDER BY points DESC LIMIT 3`, function (err, rows) {
+			connection.query(`SELECT username, points FROM acc_event ORDER BY points DESC LIMIT 5`, function (err, rows) {
 				if (err) throw err;
 
 				(async () => {
@@ -19,6 +19,8 @@ module.exports = {
 							{ name: 'Miejsce 1.', value: rows[0].username + ' - ' + rows[0].points, inline: true },
 							{ name: 'Miejsce 2.', value: rows[1].username + ' - ' + rows[1].points, inline: true },
 							{ name: 'Miejsce 3.', value: rows[2].username + ' - ' + rows[2].points, inline: true },
+							{ name: 'Miejsce 4.', value: rows[3].username + ' - ' + rows[3].points, inline: true },
+							{ name: 'Miejsce 5.', value: rows[4].username + ' - ' + rows[4].points, inline: true },
 						)
 						msg.delete;
 						message.channel.send(LeaderboardEmbed);
