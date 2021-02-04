@@ -169,7 +169,8 @@ client.on('message', message => {
                                 updatedPoints + 1;
                                 console.log('sex');
                                 //console.log(`${Member.user.tag} is connected to ${Member.voice.channel.name}!`);
-                            } else if(message.member.roles.find(r => r.name === "Dusiciele")){
+                            } 
+                            if(message.member.roles.cache.find(r => r.name === "Dusiciele")){
                                 updatedXp + 5;
                                 console.log("omg its a strangler!")
                             }
