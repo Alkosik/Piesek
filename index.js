@@ -160,26 +160,29 @@ client.on('message', message => {
                             console.log(`Signature confirmed. - ${message.author.username}`);
 
                             originalPoints = rows[0].points;
+                            console.log(originalPoints)
                             updatedPoints = originalPoints + 1;
 
                             const Guild = client.guilds.cache.get("510941195267080214");
                             const conn_member = Guild.members.cache.get(message.author.id);
 
                             if (conn_member.voice.channel) { 
-                                updatedPoints + 1;
+                                updatedPoints += 1;
                                 console.log('sex');
                                 //console.log(`${Member.user.tag} is connected to ${Member.voice.channel.name}!`);
                             } 
                             if (message.member.roles.cache.find(r => r.name === "Dusiciele")){
-                                updatedXp + 5;
+                                updatedPoints += 5;
                                 console.log("omg its a strangler!")
                             }
                             if (message.content.length <= 2) {
-                                updatedXp = 0;
+                                updatedPoints += 0;
                             }
 
+                            loggedPoints = updatedPoints - originalPoints;
+
                             sql = `UPDATE acc_event SET points = ${updatedPoints} WHERE id = '${message.author.id}'`;
-                            console.log(`added ${updatedXp} to ${message.author.username}`);
+                            console.log(`added ${loggedPoints} to ${message.author.username}`);
     
                             connection.query(sql);
 
