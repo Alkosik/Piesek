@@ -176,7 +176,7 @@ client.on('message', message => {
                                 console.log("omg its a strangler!")
                             }
                             if (message.content.length <= 2) {
-                                updatedPoints += 0;
+                                updatedPoints = originalPoints;
                             }
 
                             loggedPoints = updatedPoints - originalPoints;
