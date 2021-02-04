@@ -302,7 +302,7 @@ client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => { // Listeing to
             user_connected = true;
             saved_channel = newVoiceState.channel;
             console.log(`${newVoiceState.member.user.tag} connected to ${newVoiceState.channel.name}.`);
-            start_timer();
+            //start_timer();
         } else if (oldVoiceState.channel) { // The member disconnected from a channel.
             user_connected = false;
             saved_channel = null;
