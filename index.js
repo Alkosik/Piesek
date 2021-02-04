@@ -166,6 +166,10 @@ client.on('message', message => {
                             const Guild = client.guilds.cache.get("510941195267080214");
                             const conn_member = Guild.members.cache.get(message.author.id);
 
+                            if (message.content.length <= 2) {
+                                return;
+                                updatedPoints = originalPoints;
+                            }
                             if (conn_member.voice.channel) { 
                                 updatedPoints += 1;
                                 console.log('sex');
@@ -174,9 +178,6 @@ client.on('message', message => {
                             if (message.member.roles.cache.find(r => r.name === "Dusiciele")){
                                 updatedPoints += 5;
                                 console.log("omg its a strangler!")
-                            }
-                            if (message.content.length <= 2) {
-                                updatedPoints = originalPoints;
                             }
 
                             loggedPoints = updatedPoints - originalPoints;
