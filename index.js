@@ -179,6 +179,7 @@ client.on('message', message => {
                             }
 
                             sql = `UPDATE acc_event SET points = ${updatedPoints} WHERE id = '${message.author.id}'`;
+                            console.log(`added ${updatedXp} to ${message.author.username}`);
     
                             connection.query(sql);
 
