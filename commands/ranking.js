@@ -1,0 +1,31 @@
+module.exports = {
+	name: 'ranking',
+	description: 'Ranking!',
+	execute(message, args, connection, client, Discord) {
+		(async () => {
+			connection.query(`SELECT username, points FROM acc_event ORDER BY points DESC LIMIT 3`, function (err, rows) {
+				if (err) throw err;
+
+				(async () => {
+					msg = await message.channel.send("Pobieranie danych z bazy...");
+					setTimeout(() => {
+						/// Edit msg 20 seconds later
+						//msg.edit("Wygenerowano: Wiek - " + role_age + " lat, Wzrost - " + role_height + "cm, Płeć - " + randomValue + ", Waga - " + role_weight + "kg.");
+						const LeaderboardEmbed = new Discord.MessageEmbed()
+						.setColor('#4d33de')
+						.setTitle('Aktualny ranking w konkursie')
+						.setThumbnail('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')
+						.addFields(
+							{ name: 'Miejsce 1.', value: rows[0].username + ' - ' + rows[0].points, inline: true },
+							{ name: 'Miejsce 2.', value: rows[1].username + ' - ' + rows[1].points, inline: true },
+							{ name: 'Miejsce 3.', value: rows[2].username + ' - ' + rows[2].points, inline: true },
+						)
+						msg.delete;
+						message.channel.send(LeaderboardEmbed);
+						console.log(rows)
+					}, 2000);
+				})();
+			});
+		})();
+	},
+};
