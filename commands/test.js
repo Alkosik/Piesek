@@ -13,14 +13,14 @@ module.exports = {
 
 				//id = rows[0].id;
 				const embed = new Discord.MessageEmbed()
-                            .setImage('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')
-							.setTitle(`Aktualnie najwięcej punktów ma ${rows[0].username}`)
-							.setDescription(`Tabela wyników kiedyś będzie dostępna na https://hauhau.herokuapp.com`)
-                            .setColor('#4d33de');
+					.setImage('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')
+					.setTitle(`Aktualnie najwięcej punktów ma ${rows[0].username}`)
+					.setDescription(`Tabela wyników kiedyś będzie dostępna na https://hauhau.herokuapp.com`)
+					.setColor('#4d33de');
 
 
-                client.channels.cache.get('747933354468573194').send(embed);
-				
+				client.channels.cache.get('747933354468573194').send(embed);
+
 			})
 
 		})();

@@ -31,7 +31,9 @@ const {
 //const asyncio = require('asyncio');
 
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 const connection = mysql.createConnection({
     host: process.env.HOST,
@@ -172,12 +174,12 @@ client.on('message', message => {
                             } else if (message.content.length >= 60) {
                                 return;
                             }
-                            if (conn_member.voice.channel) { 
+                            if (conn_member.voice.channel) {
                                 updatedPoints += 1;
                                 console.log('sex');
                                 //console.log(`${Member.user.tag} is connected to ${Member.voice.channel.name}!`);
-                            } 
-                            if (message.member.roles.cache.find(r => r.name === "Dusiciele")){
+                            }
+                            if (message.member.roles.cache.find(r => r.name === "Dusiciele")) {
                                 updatedPoints += 5;
                                 console.log("omg its a strangler!")
                             }
@@ -186,13 +188,13 @@ client.on('message', message => {
 
                             sql = `UPDATE acc_event SET points = ${updatedPoints} WHERE id = '${message.author.id}'`;
                             console.log(`added ${loggedPoints} to ${message.author.username}`);
-    
+
                             connection.query(sql);
 
                             // Adds the user to the set so that they can't talk for a minute
                             talkedRecently.add(message.author.id);
                             setTimeout(() => {
-                                
+
                                 talkedRecently.delete(message.author.id);
                             }, 20000);
                         }
@@ -334,16 +336,16 @@ client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => { // Listeing to
 var j = schedule.scheduleJob('0 12 1 * *', function () {
     (async () => {
         connection.query(`SELECT * FROM acc_event WHERE points=(SELECT MAX(points) FROM acc_event)`, function (err, rows) {
-                if (err) throw err;
+            if (err) throw err;
 
-                const embed = new Discord.MessageEmbed()
-                            .setImage('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')
-							.setTitle(`Aktualnie najwięcej punktów ma ${rows[0].username}`)
-							.setDescription(`Tabela wyników kiedyś będzie dostępna na https://hauhau.herokuapp.com`)
-                            .setColor('#4d33de');
+            const embed = new Discord.MessageEmbed()
+                .setImage('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')
+                .setTitle(`Aktualnie najwięcej punktów ma ${rows[0].username}`)
+                .setDescription(`Tabela wyników kiedyś będzie dostępna na https://hauhau.herokuapp.com`)
+                .setColor('#4d33de');
 
 
-                client.channels.cache.get('510941195929649153').send(embed);
+            client.channels.cache.get('510941195929649153').send(embed);
             console.log(rows);
 
 

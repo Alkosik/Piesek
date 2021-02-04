@@ -9,7 +9,7 @@ module.exports = {
 		const Discord = require('discord.js');
 
 		let msg;
-		
+
 		(async () => {
 			connection.query(`SELECT * FROM account WHERE id = ${message.author.id}`, function (err, rows) {
 				if (err) throw err;
@@ -41,26 +41,43 @@ module.exports = {
 						let rounded_rand4 = Number(rand4.toFixed(1));
 						role_dicklenght = rounded_rand4 + "cm";
 						//} else {
-							//role_dicklenght = "Brak"
+						//role_dicklenght = "Brak"
 						//}
 						const role_hobbies = hobbies_values[parseInt(Math.random() * hobbies_values.length)]
 						console.log(role_hobbies);
-						
+
 						setTimeout(() => {
 							/// Edit msg 20 seconds later
 							//msg.edit("Wygenerowano: Wiek - " + role_age + " lat, Wzrost - " + role_height + "cm, Płeć - " + randomValue + ", Waga - " + role_weight + "kg.");
 							const ProfileEmbed = new Discord.MessageEmbed()
-							.setColor('RED')
-							.setTitle(message.author.username)
-							.setThumbnail(message.author.avatarURL())
-							.addFields(
-								{ name: 'Wiek', value: role_age + " lat", inline: true },
-								{ name: 'Wzrost', value: role_height + "cm", inline: true },
-								{ name: 'Waga', value: role_weight + "kg", inline: true },
-								{ name: 'Płeć', value: role_gender + "", inline: true },
-								{ name: 'Długość dicka/Szerokość pochwy', value: role_dicklenght, inline: true },
-								{ name: 'Hobby', value: role_hobbies, inline: true}
-							)
+								.setColor('RED')
+								.setTitle(message.author.username)
+								.setThumbnail(message.author.avatarURL())
+								.addFields({
+									name: 'Wiek',
+									value: role_age + " lat",
+									inline: true
+								}, {
+									name: 'Wzrost',
+									value: role_height + "cm",
+									inline: true
+								}, {
+									name: 'Waga',
+									value: role_weight + "kg",
+									inline: true
+								}, {
+									name: 'Płeć',
+									value: role_gender + "",
+									inline: true
+								}, {
+									name: 'Długość dicka/Szerokość pochwy',
+									value: role_dicklenght,
+									inline: true
+								}, {
+									name: 'Hobby',
+									value: role_hobbies,
+									inline: true
+								})
 							msg.delete;
 							message.channel.send(ProfileEmbed);
 							console.log(rows)
@@ -71,29 +88,46 @@ module.exports = {
 						connection.query(sqlquery);
 					})();
 				} else {
-					
+
 					(async () => {
-					msg = await message.channel.send("Pobieranie danych z bazy...");
-					setTimeout(() => {
-						/// Edit msg 20 seconds later
-						//msg.edit("Wygenerowano: Wiek - " + role_age + " lat, Wzrost - " + role_height + "cm, Płeć - " + randomValue + ", Waga - " + role_weight + "kg.");
-						const ProfileEmbed = new Discord.MessageEmbed()
-						.setColor('RED')
-						.setTitle(message.author.username)
-						.setThumbnail(message.author.avatarURL())
-						.addFields(
-							{ name: 'Wiek', value: rows[0].rp_age + " lat", inline: true },
-							{ name: 'Wzrost', value: rows[0].rp_height + "cm", inline: true },
-							{ name: 'Waga', value: rows[0].rp_weight + "kg", inline: true },
-							{ name: 'Płeć', value: rows[0].rp_gender + "", inline: true },
-							{ name: 'Długość dicka/Szerokość pochwy', value: rows[0].rp_dicklenght + 'cm', inline: true },
-							{ name: 'Hobby', value: rows[0].rp_hobbies, inline: true}
-						)
-						msg.delete;
-						message.channel.send(ProfileEmbed);
-						console.log(rows)
-					}, 2000);
-				})();
+						msg = await message.channel.send("Pobieranie danych z bazy...");
+						setTimeout(() => {
+							/// Edit msg 20 seconds later
+							//msg.edit("Wygenerowano: Wiek - " + role_age + " lat, Wzrost - " + role_height + "cm, Płeć - " + randomValue + ", Waga - " + role_weight + "kg.");
+							const ProfileEmbed = new Discord.MessageEmbed()
+								.setColor('RED')
+								.setTitle(message.author.username)
+								.setThumbnail(message.author.avatarURL())
+								.addFields({
+									name: 'Wiek',
+									value: rows[0].rp_age + " lat",
+									inline: true
+								}, {
+									name: 'Wzrost',
+									value: rows[0].rp_height + "cm",
+									inline: true
+								}, {
+									name: 'Waga',
+									value: rows[0].rp_weight + "kg",
+									inline: true
+								}, {
+									name: 'Płeć',
+									value: rows[0].rp_gender + "",
+									inline: true
+								}, {
+									name: 'Długość dicka/Szerokość pochwy',
+									value: rows[0].rp_dicklenght + 'cm',
+									inline: true
+								}, {
+									name: 'Hobby',
+									value: rows[0].rp_hobbies,
+									inline: true
+								})
+							msg.delete;
+							message.channel.send(ProfileEmbed);
+							console.log(rows)
+						}, 2000);
+					})();
 				}
 			});
 		})();

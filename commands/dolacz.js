@@ -13,7 +13,7 @@ module.exports = {
 
 			connection.query(`SELECT * FROM acc_event WHERE id = ${message.author.id}`, function (err, rows) {
 				if (err) throw err;
-				
+
 				let updatedPoints;
 
 				if (rows.length <= 1) {
