@@ -171,6 +171,7 @@ client.on('message', message => {
                                 //console.log(`${Member.user.tag} is connected to ${Member.voice.channel.name}!`);
                             } else if(message.member.roles.find(r => r.name === "Dusiciele")){
                                 updatedXp + 5;
+                                console.log("omg its a strangler!")
                             }
                             sql = `UPDATE acc_event SET points = ${updatedPoints} WHERE id = '${message.author.id}'`;
     
