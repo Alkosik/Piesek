@@ -1,3 +1,4 @@
+//#region vars
 const fs = require('fs');
 const Discord = require('discord.js');
 var express = require('express');
@@ -44,6 +45,7 @@ const connection = mysql.createConnection({
 
 let levelup = 100; // Level Up EXP
 let purple = `RANDOM`;
+//#endregion
 
 function generateXp() { //Generating EXP
     return Math.floor(Math.random() * (10 - 5 + 1)) + 5; // Amount of EXP
@@ -100,7 +102,7 @@ http
     .listen(process.env.PORT);
 console.log("Server listening on port: " + process.env.PORT);
 
-
+//#region client.on('message)
 client.on('message', message => {
     if (!message.content.startsWith(prefix) && !message.author.bot) {
         connection.query(`SELECT * FROM account WHERE id = ${message.author.id}`, function (err, rows) {
@@ -119,16 +121,15 @@ client.on('message', message => {
                 updatedXp = originalXp + generateXp();
                 sql = `UPDATE account SET xp = ${updatedXp}, username = '${message.author.username}' WHERE id = '${message.author.id}'`;
 
-                let nxtLvl = rows[0].level * levelup; //how many +1 level per xp points
+                let nxtLvl = rows[0].level * levelup; // How much xp it takes to levelup.
 
-                if (nxtLvl <= rows[0].xp) { //If level supass that amount it 
+                if (nxtLvl <= rows[0].xp) { // Update level if xp amout surpasses it.
                     connection.query(`UPDATE account SET level = ${rows[0].level + 1} WHERE id = '${message.author.id}'`) //updates level
                 }
 
                 //levelup message 
                 if (nxtLvl <= rows[0].xp) {
                     (async () => {
-                        //const attachment = new Discord.Attachment('./images/logo.png', 'logo.png');
                         const lvlup = new Discord.MessageEmbed()
                             .setThumbnail('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')
                             .setDescription(`muj boze, ${message.author.username} wbiles poziom ${rows[0].level + 1}`)
@@ -176,25 +177,23 @@ client.on('message', message => {
                             }
                             if (conn_member.voice.channel) {
                                 updatedPoints += 1;
-                                console.log('sex');
-                                //console.log(`${Member.user.tag} is connected to ${Member.voice.channel.name}!`);
+                                console.log('Connected user detected.');
                             }
                             if (message.member.roles.cache.find(r => r.name === "Dusiciele")) {
                                 updatedPoints += 5;
-                                console.log("omg its a strangler!")
+                                console.log("Points booster role detected.")
                             }
 
                             loggedPoints = updatedPoints - originalPoints;
 
                             sql = `UPDATE acc_event SET points = ${updatedPoints} WHERE id = '${message.author.id}'`;
-                            console.log(`added ${loggedPoints} to ${message.author.username}`);
+                            console.log(`Adding ${loggedPoints} to ${message.author.username}`);
 
                             connection.query(sql);
 
-                            // Adds the user to the set so that they can't talk for a minute
+                            // Adds the user to the cooldown set
                             talkedRecently.add(message.author.id);
                             setTimeout(() => {
-
                                 talkedRecently.delete(message.author.id);
                             }, 20000);
                         }
@@ -235,6 +234,9 @@ client.on('message', message => {
         client.emit('guildMemberAdd', message.member);
     }
 });
+//#endregion
+
+//#region guildMemberAdd
 
 client.on('guildMemberAdd', async member => {
     const channel = member.guild.channels.cache.find(ch => ch.id === '511224486545326100');
@@ -292,17 +294,21 @@ client.on('guildMemberAdd', async member => {
 
     channel.send(`Witamy na serwerze, ${member}!`, attachment);
 });
+//#endregion
 
-//////////////////////
-//                  //
-//  THE MAIN EVENT  //
-//                  //
-//////////////////////
+//////////////////////////////////
+//                              //
+//        THE MAIN EVENT        //
+//                              //
+//////////////////////////////////
+
+//#region voiceStateUpdate
 let saved_channel;
 let user_connected;
 
 client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => { // Listeing to the voiceStateUpdate event
     (async () => {
+
         if (newVoiceState.channel) { // The member connected to a channel.
             user_connected = true;
             saved_channel = newVoiceState.channel;
@@ -313,28 +319,14 @@ client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => { // Listeing to
             saved_channel = null;
             console.log(`${oldVoiceState.member.user.tag} disconnected from ${oldVoiceState.channel.name}.`)
         };
+
     })();
 });
-
-// function start_timer(){
-//     (async () => {
-//         console.log("Timer started.")
-//         await snooze(5000);
-//         if(user_connected === true){
-//             console.log("Points added.")
-//         } else {
-//             console.log("No points added.")
-//         }
-//         console.log("time ended");
-
-//     })();
-// }
-
-
-
+//#endregion
 
 var j = schedule.scheduleJob('0 12 1 * *', function () {
     (async () => {
+
         connection.query(`SELECT * FROM acc_event WHERE points=(SELECT MAX(points) FROM acc_event)`, function (err, rows) {
             if (err) throw err;
 
@@ -348,10 +340,6 @@ var j = schedule.scheduleJob('0 12 1 * *', function () {
             client.channels.cache.get('510941195929649153').send(embed);
             console.log(rows);
 
-
-
         })
-        //console.log("tf")
-
     })();
 });
