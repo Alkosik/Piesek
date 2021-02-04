@@ -169,6 +169,8 @@ client.on('message', message => {
                             if (message.content.length <= 2) {
                                 return;
                                 updatedPoints = originalPoints;
+                            } else if (message.content.length >= 60) {
+                                return;
                             }
                             if (conn_member.voice.channel) { 
                                 updatedPoints += 1;
