@@ -32,7 +32,7 @@ const {
 } = require('process');
 //const asyncio = require('asyncio');
 
-app.use(express.static(__dirname + '/public'));
+app.use('/assets', express.static('assets'))
 app.use(bodyParser.urlencoded({
     extended: false
 }));
