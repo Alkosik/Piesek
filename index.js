@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var path = require('path');
 const {
     prefix
 } = require('./config.json');
@@ -89,18 +90,22 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     }
 });
 
-//client.user.setPresence({ game: { name: 'Gang Słoni', type: "streaming", url: "https://gangsloni.pl"}});
+// http
+//     .createServer((request, response) => {
+//         response.writeHead(200, {
+//             "Content-Type": "text/plain"
+//         });
+//         response.write(utf8.encode("Gang Słoni Dev Team"));
+//         response.end();
+//     })
+//     .listen(process.env.PORT);
+// console.log("Server listening on port: " + process.env.PORT);
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/html/index.html'));
+});
 
-http
-    .createServer((request, response) => {
-        response.writeHead(200, {
-            "Content-Type": "text/plain"
-        });
-        response.write(utf8.encode("Gang Słoni Dev Team"));
-        response.end();
-    })
-    .listen(process.env.PORT);
-console.log("Server listening on port: " + process.env.PORT);
+app.listen(process.env.PORT);
+console.log('Server listening on port: ' + process.env.PORT);
 
 //#region client.on('message)
 client.on('message', message => {

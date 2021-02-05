@@ -1,0 +1,28 @@
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+.title{
+    text-align: center;
+    font-size: 72px;
+}
+
+.btn {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    cursor: pointer;
+    font-size: 20px;
+}
+  
+.btn:hover {
+    background-color: white;
+    color: black;
+}
+
+.buttons{
+    line-height: 200px;
+    height: 200px;
+    text-align: center;
+}
