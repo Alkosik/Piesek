@@ -5,6 +5,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
+var favicon = require('serve-favicon');
 const {
     prefix
 } = require('./config.json');
@@ -36,6 +37,7 @@ app.use('/assets', express.static('assets'))
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(favicon(path.join(__dirname,'images','favicon.ico')));
 
 const connection = mysql.createConnection({
     host: process.env.HOST,
