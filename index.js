@@ -339,8 +339,8 @@ var j = schedule.scheduleJob('0 12 1 * *', function () {
 
             const embed = new Discord.MessageEmbed()
                 .setImage('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')
-                .setTitle(`Aktualnie najwięcej punktów ma ${rows[0].username}`)
-                .setDescription(`Tabela wyników kiedyś będzie dostępna na https://hauhau.herokuapp.com`)
+                .setTitle(`Zwycięzcą konkursu jest ${rows[0].username}`)
+                //.setDescription(`Tabela wyników kiedyś będzie dostępna na https://hauhau.herokuapp.com`)
                 .setColor('#4d33de');
 
 
@@ -348,5 +348,15 @@ var j = schedule.scheduleJob('0 12 1 * *', function () {
             console.log(rows);
 
         })
+    })();
+});
+
+var j2 = schedule.scheduleJob('0 0 12 * *', function () {
+    (async () => {
+
+        
+            client.channels.cache.get('510941195929649153').send(`Erratas, Erratum, Eratas`);
+
+        
     })();
 });
