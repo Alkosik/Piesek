@@ -26,6 +26,8 @@ module.exports = {
 					connection.query(sql);
 					(async () => {
 						await snooze(2500);
+						role = message.guild.roles.cache.find(r => r.name === "FAME");
+						message.member.roles.add(role).catch(console.error);
 						msg1.edit(`Zostales zarejestrowany w konkursie. - ${message.author}`);
 					})();
 				} else {

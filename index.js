@@ -37,7 +37,7 @@ app.use('/assets', express.static('assets'))
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-app.use(favicon(path.join(__dirname,'images','favicon.ico')));
+app.use(favicon(path.join(__dirname, 'images', 'favicon.ico')));
 
 const connection = mysql.createConnection({
     host: process.env.HOST,
@@ -56,7 +56,6 @@ function generateXp() { //Generating EXP
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
-
     // set a new item in the Collection
     // with the key as the command name and the value as the exported module
     client.commands.set(command.name, command);
@@ -102,7 +101,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 //     })
 //     .listen(process.env.PORT);
 // console.log("Server listening on port: " + process.env.PORT);
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/html/index.html'));
 });
 
@@ -223,6 +222,15 @@ client.on('message', message => {
 
         const command = client.commands.get(commandName);
 
+        if (command.args && !args.length) {
+            let reply = `Nie podałeś żadnych argumentów, ${message.author}. ~Deemz`;
+
+            if (command.usage) {
+                reply += `\nKUBIIIIIIII: \`${prefix}${command.name} ${command.usage}\``;
+            }
+
+            return message.channel.send(reply);
+        }
         try {
             command.execute(message, args, connection, client, Discord);
         } catch (error) {
@@ -231,7 +239,11 @@ client.on('message', message => {
         }
         (async () => {
             await snooze(3000);
-            message.delete();
+            try {
+                message.delete();
+            } catch (error) {
+                console.log(error);
+            }
         })();
     }
 })
@@ -354,9 +366,9 @@ var j = schedule.scheduleJob('0 12 1 * *', function () {
 var j2 = schedule.scheduleJob('0 0 12 * *', function () {
     (async () => {
 
-        
-            client.channels.cache.get('510941195929649153').send(`Erratas, Erratum, Eratas`);
 
-        
+        client.channels.cache.get('510941195929649153').send(`Erratas, Erratum, Eratas`);
+
+
     })();
 });
