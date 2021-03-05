@@ -12,6 +12,7 @@ const {
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
@@ -46,7 +47,7 @@ const connection = mysql.createConnection({
     database: "www5056_gsmaindb"
 });
 
-let levelup = 100; // Level Up EXP
+let levelup = 500; // Level Up EXP
 let purple = `RANDOM`;
 //#endregion
 
@@ -54,6 +55,9 @@ function generateXp() { //Generating EXP
     return Math.floor(Math.random() * (10 - 5 + 1)) + 5; // Amount of EXP
 }
 
+//#region Handlers
+
+// Commands
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     // set a new item in the Collection
@@ -61,17 +65,17 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
-client.once('ready', () => {
-    console.log('Discord connection established!');
-    client.user.setPresence({
-        status: 'online',
-        activity: {
-            name: "Gang Słoni",
-            type: "STREAMING",
-            url: "https://www.twitch.tv/alkosik_"
-        }
-    });
-});
+// Events
+for (const file of eventFiles) {
+	const event = require(`./events/${file}`);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args, client));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args, client));
+	}
+}
+
+//#endregion
 
 client.login(token);
 
@@ -141,7 +145,7 @@ client.on('message', message => {
                             .setDescription(`muj boze, ${message.author.username} wbiles poziom ${rows[0].level + 1}`)
                             .setColor(purple);
                         lvlupmsg = await message.channel.send(lvlup);
-                        await snooze(10000);
+                        await snooze(5000);
                         lvlupmsg.delete
                     })();
                 }
