@@ -7,7 +7,7 @@ module.exports = {
 
 		if (client.user.tag !== "Piesek BETA#0702") {
 			const fortnite = client.emojis.cache.find(emoji => emoji.name === "tftf");
-			client.channels.cache.get("510941195929649153").send(`Siema, wróciłem ${fortnite}`);
+			client.channels.cache.get("747933354468573194").send(`Siema, wróciłem ${fortnite}`);
 
 			client.user.setPresence({
 				status: 'online',
