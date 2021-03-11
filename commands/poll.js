@@ -27,8 +27,7 @@ module.exports = {
 							})
 
             message.channel.send(PollEmbed).then(sentEmbed => {
-                sentEmbed.react(rafonix)
-                sentEmbed.react(delti);
+				sentEmbed.react(rafonix).then(() => sentEmbed.react(delti));
             })
         })();
 	},

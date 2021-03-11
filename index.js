@@ -146,7 +146,12 @@ client.on('message', message => {
                             .setColor(purple);
                         lvlupmsg = await message.channel.send(lvlup);
                         await snooze(5000);
-                        lvlupmsg.delete
+                        lvlupmsg.delete().catch(error => {
+                            // Only log the error if it is not an Unknown Message error
+                            if (error.code !== 10008) {
+                                console.error('Failed to delete the message:', error);
+                            }
+                        });
                     })();
                 }
             }
@@ -243,11 +248,12 @@ client.on('message', message => {
         }
         (async () => {
             await snooze(3000);
-            try {
-                message.delete();
-            } catch (error) {
-                console.log(error);
-            }
+                message.delete().catch(error => {
+                    // Only log the error if it is not an Unknown Message error
+                    if (error.code !== 10008) {
+                        console.error('Failed to delete the message:', error);
+                    }
+                });
         })();
     }
 })

@@ -6,8 +6,8 @@ module.exports = {
 		console.log(`Logged in as ${client.user.tag}.`);
 
 		if (client.user.tag !== "Piesek BETA#0702") {
-			const fortnite = client.emojis.cache.find(emoji => emoji.name === "tftf");
-			client.channels.cache.get("747933354468573194").send(`Siema, wróciłem ${fortnite}`);
+			//const fortnite = client.emojis.cache.find(emoji => emoji.name === "tftf");
+			//client.channels.cache.get("747933354468573194").send(`Siema, wróciłem ${fortnite}`);
 
 			client.user.setPresence({
 				status: 'online',
@@ -22,7 +22,7 @@ module.exports = {
 				status: 'online',
 				activity: {
 					name: "jestem w becie jak coś",
-					type: "STREAMING",
+					type: "PLAYING",
 					url: "https://www.twitch.tv/alkosik_"
 				}
 			});
