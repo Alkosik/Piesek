@@ -1,4 +1,5 @@
 module.exports = {
+	category: 'Fun',
 	name: 'fikolek',
 	description: 'Fikołek!',
     slash: true,

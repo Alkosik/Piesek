@@ -1,5 +1,5 @@
 module.exports = {
-	category: 'Fun',
+	category: 'Roleplay',
 	name: 'dick',
 	description: 'Długość dicka',
 	execute(message, args) {

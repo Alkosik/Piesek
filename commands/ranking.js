@@ -1,4 +1,5 @@
 module.exports = {
+	category: 'Ranking',
 	name: 'ranking',
 	description: 'Ranking!',
 	execute(message, args, connection, client, Discord) {

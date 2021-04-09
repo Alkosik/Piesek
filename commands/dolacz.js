@@ -1,6 +1,7 @@
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 module.exports = {
+	category: 'Events',
 	name: 'dolacz',
 	description: 'Dołącz!',
 	execute(message, args, connection) {

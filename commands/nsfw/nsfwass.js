@@ -3,9 +3,9 @@ const NSFW = require("discord-nsfw");
 const nsfw = new NSFW();
 
 module.exports = {
+	category: 'NSFW',
 	name: 'ass',
 	description: 'ass!',
-	Category: 'nsfw',
 	execute(message, args) {
 		if (message.channel.nsfw) {
 			(async () => {

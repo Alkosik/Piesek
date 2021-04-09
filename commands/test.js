@@ -1,6 +1,7 @@
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 module.exports = {
+	category: 'Utility',
 	name: 'test',
 	description: 'tst!',
 	execute(message, args, connection, client, Discord) {

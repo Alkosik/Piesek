@@ -2,6 +2,7 @@ const giphyRandom = require("giphy-random");
 const Discord = require('discord.js');
 
 module.exports = {
+	category: 'Fun',
 	name: 'gif',
 	description: 'Ale gif',
 	execute(message, args) {

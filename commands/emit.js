@@ -1,4 +1,5 @@
 module.exports = {
+	category: 'Utility',
 	name: 'emit',
 	description: 'dev command!',
 	execute(message, args, client) {

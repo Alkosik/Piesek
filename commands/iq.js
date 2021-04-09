@@ -1,4 +1,5 @@
 module.exports = {
+	category: 'Fun',
 	name: 'iq',
 	description: 'Ilość iq',
 	execute(message, args) {

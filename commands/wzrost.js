@@ -1,4 +1,5 @@
 module.exports = {
+	category: 'Roleplay',
 	name: 'wzrost',
 	description: 'Twój wzrost.',
 	execute(message, args) {

@@ -3,9 +3,9 @@ const NSFW = require("discord-nsfw");
 const nsfw = new NSFW();
 
 module.exports = {
+	category: 'NSFW',
 	name: 'boobs',
 	description: 'boobs!',
-	Category: 'nsfw',
 	execute(message, args) {
 		(async () => {
 			let desire = args[0]

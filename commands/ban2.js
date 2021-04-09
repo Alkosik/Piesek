@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 
 module.exports = {
-    category: 'Fun',
+    category: 'Moderation',
     name: 'ban',
     description: 'Ban',
     execute(message, args) {

@@ -1,4 +1,5 @@
 module.exports = {
+	category: 'Roleplay',
 	name: 'płeć',
 	description: 'Twoja płeć',
 	execute(message, args, connection) {

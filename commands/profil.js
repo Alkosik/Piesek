@@ -1,4 +1,5 @@
 module.exports = {
+	category: 'Roleplay',
 	name: 'profil',
 	description: 'Profil!',
 	execute(message, args, connection) {

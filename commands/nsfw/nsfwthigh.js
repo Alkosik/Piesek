@@ -3,6 +3,7 @@ const NSFW = require("discord-nsfw");
 const nsfw = new NSFW();
 
 module.exports = {
+	category: 'NSFW',
 	name: 'thigh',
 	description: 'thigh!',
 	execute(message, args) {
