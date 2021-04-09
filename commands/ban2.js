@@ -1,10 +1,12 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
     category: 'Fun',
     name: 'ban',
     description: 'Ban',
     execute(message, args) {
         (async () => {
-            if (!message.member.roles.find(r => r.name === "Administracja")  && !ownerID.includes(message.author.id)) return '**Nie masz permisji do banowania - [Administracja]**';
+            if (!message.member.roles.cache.some(r => r.name === "Administracja")) return '**Nie masz permisji do banowania - [Administracja]**';
             if (!message.guild.me.hasPermission("BAN_MEMBERS")) return message.channel.send("**Nie mam permisji do banowania - [BAN_MEMBERS]**");
             if (!args[0]) return message.channel.send("**Podaj osobę do zbanowania**")
 
@@ -15,6 +17,7 @@ module.exports = {
             if (banMember === message.member) return message.channel.send("**Nie możesz zbanować siebie kekw**")
             if (banMember === grisza) return message.channel.send("**Nie ma banowania griszy essa ;)**")
             if (banMember === nobody) return message.channel.send("**Nie ma banowania sebastiana slowika essa ;)**")
+            if (banMember.roles.cache.some(r => r.name === "Administracja")) return message.channel.send("**Administracja nie może być banowana**")
 
             var reason = args.slice(1).join(" ");
 
