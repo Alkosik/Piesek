@@ -5,6 +5,7 @@ const nsfw = new NSFW();
 module.exports = {
 	name: 'ass',
 	description: 'ass!',
+	Category: 'nsfw',
 	execute(message, args) {
 		if (message.channel.nsfw) {
 			(async () => {

@@ -1,4 +1,5 @@
 module.exports = {
+	category: 'Fun',
 	name: 'dick',
 	description: 'Długość dicka',
 	execute(message, args) {

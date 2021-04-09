@@ -5,6 +5,7 @@ const nsfw = new NSFW();
 module.exports = {
 	name: 'pussy',
 	description: 'pussy!',
+	Category: 'nsfw',
 	execute(message, args) {
 		(async () => {
 			let desire = args[0]

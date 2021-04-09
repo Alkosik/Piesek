@@ -18,11 +18,11 @@ module.exports = {
 							//.setThumbnail('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')
 							.addFields({
 								name: PollOption1,
-								value: "J",
+								value: rafonix,
 								inline: true
 							}, {
 								name: PollOption2,
-								value: "D",
+								value: delti,
 								inline: true
 							})
 
