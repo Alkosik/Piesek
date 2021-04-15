@@ -383,7 +383,7 @@ var j2 = schedule.scheduleJob('0 0 12 * *', function () {
     })();
 });
 
-var j3 = schedule.scheduleJob('* * * * *', function () {
+var j3 = schedule.scheduleJob('1 1 * * *', function () {
     (async () => {
 
         const ayy = client.emojis.cache.find(emoji => emoji.name === "JanusChamp");
