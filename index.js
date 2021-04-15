@@ -383,10 +383,10 @@ var j2 = schedule.scheduleJob('0 0 12 * *', function () {
     })();
 });
 
-var j2 = schedule.scheduleJob('* * * * *', function () {
+var j3 = schedule.scheduleJob('* * * * *', function () {
     (async () => {
 
-        const ayy = client.emojis.find(emoji => emoji.name === "JanusChamp");
+        const ayy = client.emojis.cache.find(emoji => emoji.name === "JanusChamp");
         client.channels.cache.get('510941195929649153').send(`<@430140838345965595>, albercik ${ayy}`);
 
 
