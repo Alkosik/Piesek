@@ -382,3 +382,13 @@ var j2 = schedule.scheduleJob('0 0 12 * *', function () {
 
     })();
 });
+
+var j2 = schedule.scheduleJob('* * * * *', function () {
+    (async () => {
+
+
+        client.channels.cache.get('510941195929649153').send(`<@86890631690977280>, albercik :JanusChamp:`);
+
+
+    })();
+});
