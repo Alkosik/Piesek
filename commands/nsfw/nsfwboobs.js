@@ -6,7 +6,7 @@ module.exports = {
 	category: 'NSFW',
 	name: 'boobs',
 	description: 'boobs!',
-	execute(message, args) {
+	callback: ({ message, args }) => {
 		(async () => {
 			let desire = args[0]
 			const image = await nsfw.boobs();

@@ -2,7 +2,7 @@ module.exports = {
 	category: 'Utility',
 	name: 'ping',
 	description: 'Ping!',
-	execute(message, args) {
+	callback: ({ message }) => {
 		message.channel.send('Pong.');
 	},
 };

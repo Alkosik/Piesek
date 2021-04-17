@@ -9,7 +9,9 @@ var favicon = require('serve-favicon');
 const {
     prefix
 } = require('./config.json');
-const client = new Discord.Client();
+const client = new Discord.Client({
+    partials: ['MESSAGE', 'REACTION'],
+});
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
@@ -241,7 +243,8 @@ client.on('message', message => {
             return message.channel.send(reply);
         }
         try {
-            command.execute(message, args, connection, client, Discord);
+            //command.execute(message, args, connection, client, Discord);
+            console.log('Transfering to WOKcommands')
         } catch (error) {
             console.error(error);
             message.reply('Egzekucja komendy zakonczyla sie niepowodzeniem!');

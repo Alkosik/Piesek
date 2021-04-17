@@ -2,7 +2,7 @@ module.exports = {
 	category: 'Roleplay',
 	name: 'dick',
 	description: 'Długość dicka',
-	execute(message, args) {
+	callback: ({ message }) => {
 		if (message.author.username === 'Alkosik') {
 			return message.reply('alkosik muj pan ma 69cm w dicku')
 		}

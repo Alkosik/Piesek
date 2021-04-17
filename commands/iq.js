@@ -2,7 +2,7 @@ module.exports = {
 	category: 'Fun',
 	name: 'iq',
 	description: 'Ilość iq',
-	execute(message, args) {
+	callback: ({ message }) => {
 		if (message.author.username != "Alkosik") {
 			let iq = Math.random() * (183 - 1) + 1;
 			let rounded_iq = Number(iq.toFixed(1))

@@ -1,10 +1,20 @@
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
+const mysql = require('mysql');
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+const connection = mysql.createConnection({
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: "www5056_gsmaindb"
+});
 
 module.exports = {
 	category: 'Events',
 	name: 'dolacz',
 	description: 'Dołącz!',
-	execute(message, args, connection) {
+	callback: ({ message, args }) => {
 		//if (message.author.id != "224487361394769920") {
 		//	return message.reply("Dołączanie do konkursu jest akutalnie wyłączone.");
 		//}

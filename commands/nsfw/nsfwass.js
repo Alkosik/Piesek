@@ -6,7 +6,7 @@ module.exports = {
 	category: 'NSFW',
 	name: 'ass',
 	description: 'ass!',
-	execute(message, args) {
+	callback: ({ message }) => {
 		if (message.channel.nsfw) {
 			(async () => {
 				const image = await nsfw.ass();

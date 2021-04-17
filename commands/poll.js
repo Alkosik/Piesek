@@ -6,7 +6,7 @@ module.exports = {
 	description: 'Poll!',
     args: true,
     usage: '<Nazwa> <Opcja 1> <Opcja 2>',
-	execute(message, args) {
+	callback: ({ message, args }) => {
         const rafonix = message.guild.emojis.cache.find(emoji => emoji.name === 'uszatyrafonix');
         const delti = message.guild.emojis.cache.find(emoji => emoji.name === 'delti');
         PollTitle = args[0];

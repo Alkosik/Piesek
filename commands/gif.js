@@ -5,7 +5,7 @@ module.exports = {
 	category: 'Fun',
 	name: 'gif',
 	description: 'Ale gif',
-	execute(message, args) {
+	callback: ({ message, args }) => {
 		(async () => {
 			const API_KEY = "BpdjjPXkq4YMkNOKT4iTQAfV9g2gO4DX";
 

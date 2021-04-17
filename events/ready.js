@@ -46,7 +46,7 @@ module.exports = {
 			new WOKCommands(client, {
 				commandsDir: 'commands',
 				testServers: [guildId],
-			})
+			}).setDefaultPrefix('gs')
 
 		})();
 

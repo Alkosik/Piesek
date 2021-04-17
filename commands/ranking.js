@@ -1,8 +1,20 @@
+const { MessageEmbed } = require('discord.js')
+const mysql = require('mysql');
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+const connection = mysql.createConnection({
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: "www5056_gsmaindb"
+});
+
 module.exports = {
 	category: 'Ranking',
 	name: 'ranking',
 	description: 'Ranking!',
-	execute(message, args, connection, client, Discord) {
+	callback: ({ message }) => {
 		(async () => {
 			connection.query(`SELECT username, points FROM acc_event ORDER BY points DESC LIMIT 5`, function (err, rows) {
 				if (err) throw err;
@@ -12,7 +24,7 @@ module.exports = {
 					setTimeout(() => {
 						/// Edit msg 20 seconds later
 						//msg.edit("Wygenerowano: Wiek - " + role_age + " lat, Wzrost - " + role_height + "cm, Płeć - " + randomValue + ", Waga - " + role_weight + "kg.");
-						const LeaderboardEmbed = new Discord.MessageEmbed()
+						const LeaderboardEmbed = new MessageEmbed()
 							.setColor('#4d33de')
 							.setTitle('Aktualny ranking w konkursie')
 							.setThumbnail('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')

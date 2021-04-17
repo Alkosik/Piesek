@@ -6,7 +6,7 @@ module.exports = {
 	category: 'NSFW',
 	name: 'hthigh',
 	description: 'hthigh!',
-	execute(message, args) {
+	callback: ({ message, args }) => {
 		(async () => {
 			let desire = args[0]
 			const image = await nsfw.hentaithigh();

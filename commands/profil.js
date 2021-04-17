@@ -1,8 +1,19 @@
+const mysql = require('mysql');
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+const connection = mysql.createConnection({
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: "www5056_gsmaindb"
+});
+
 module.exports = {
 	category: 'Roleplay',
 	name: 'profil',
 	description: 'Profil!',
-	execute(message, args, connection) {
+	callback: ({ message }) => {
 		const genders = require('../json/genders.json');
 		const gender_values = Object.values(genders);
 		const hobbies = require('../json/hobbies.json');
