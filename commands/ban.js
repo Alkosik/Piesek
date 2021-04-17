@@ -63,7 +63,7 @@ module.exports = {
         if (error === 'INVALID ARGUMENTS') {
           const embed = new MessageEmbed()
             .setTitle('Kurwo naucz sie korzystac z tej komeny')
-            .addField('najpierw oznaczasz osobe a potem dajesz powód', 'chuj')
+            .addField('najpierw oznaczasz osobe a potem dajesz powód', 'gsban <osoba> <powód>')
             .setColor(0xff0000)
     
           message.reply(embed)
