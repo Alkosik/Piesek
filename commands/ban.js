@@ -58,7 +58,9 @@ module.exports = {
                 if (!sChannel) return;
                 channel.send(embed)
         })();
-    }, 
+    }, catch (e) {
+        message.reply(e.message);
+    },
     error: ({ error, command, message, info }) => {
         if (error === 'INVALID ARGUMENTS') {
           const embed = new MessageEmbed()
