@@ -7,8 +7,11 @@ module.exports = {
     minArgs: 2,
 	expectedArgs: '<Osoba> <Powód>',
     callback: ({ message, args }) => {
-        (async () => {
-            if (!message.member.roles.cache.some(r => r.name === "Administracja")) return '**Nie masz permisji do banowania - [Administracja]**';
+        console.log('understood')
+        //(async () => {
+            console.log('Squence started.')
+            if (!message.member.roles.cache.some(r => r.name === "Administracja")) return message.channel.send('**Nie masz permisji do banowania - [Administracja]**');
+            console.log('Kurwa')
             if (!message.guild.me.hasPermission("BAN_MEMBERS")) return message.channel.send("**Nie mam permisji do banowania - [BAN_MEMBERS]**");
             if (!args[0]) return message.channel.send("**Podaj osobę do zbanowania**")
 
@@ -57,7 +60,7 @@ module.exports = {
                 var sChannel = message.guild.channels.cache.get('510944563091996673')
                 if (!sChannel) return;
                 channel.send(embed)
-        })();
+        //})();
     }, catch (e) {
         message.reply(e.message);
     },
