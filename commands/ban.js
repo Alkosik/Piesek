@@ -6,7 +6,7 @@ module.exports = {
     description: 'Ban',
     minArgs: 2,
 	expectedArgs: '<Osoba> <Powód>',
-    callback: ({ message, args }) => {
+    callback: async ({ message, args }) => {
         console.log('understood')
         //(async () => {
             console.log('Squence started.')
@@ -36,7 +36,7 @@ module.exports = {
             if (reason) {
                 var sembed = new MessageEmbed()
                     .setColor("GREEN")
-                    .setDescription(`**${banMember.user.username}** zostal zbanoway za ${reason}`)
+                    .setDescription(`**${banMember.user.username}** zostal zbanoway za **${reason}**`)
                 message.channel.send(sembed)
             } else {
                 var sembed2 = new MessageEmbed()
@@ -59,7 +59,7 @@ module.exports = {
 
                 var sChannel = message.guild.channels.cache.get('510944563091996673')
                 if (!sChannel) return;
-                channel.send(embed)
+                sChannel.send(embed)
         //})();
     }, catch (e) {
         message.reply(e.message);
