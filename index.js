@@ -69,12 +69,12 @@ for (const file of commandFiles) {
 
 // Events
 for (const file of eventFiles) {
-	const event = require(`./events/${file}`);
-	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args, client));
-	} else {
-		client.on(event.name, (...args) => event.execute(...args, client));
-	}
+    const event = require(`./events/${file}`);
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args, client));
+    } else {
+        client.on(event.name, (...args) => event.execute(...args, client));
+    }
 }
 
 //#endregion
@@ -161,7 +161,7 @@ client.on('message', message => {
             if (message.author.id != client.user.id) {
                 connection.query(sql, function (error, results, fields) {
                     if (error) throw error;
-                  });
+                });
             }
 
             if (originalXp < 500 && updatedXp >= 500) {
@@ -210,7 +210,7 @@ client.on('message', message => {
 
                             connection.query(sql, function (error) {
                                 if (error) throw error;
-                              });
+                            });
 
                             // Adds the user to the cooldown set
                             talkedRecently.add(message.author.id);
@@ -255,12 +255,12 @@ client.on('message', message => {
         }
         (async () => {
             await snooze(3000);
-                message.delete().catch(error => {
-                    // Only log the error if it is not an Unknown Message error
-                    if (error.code !== 10008) {
-                        console.error('Failed to delete the message:', error);
-                    }
-                });
+            message.delete().catch(error => {
+                // Only log the error if it is not an Unknown Message error
+                if (error.code !== 10008) {
+                    console.error('Failed to delete the message:', error);
+                }
+            });
         })();
     }
 })
@@ -396,6 +396,24 @@ var j3 = schedule.scheduleJob('1 1 * * *', function () {
         const ayy = client.emojis.cache.find(emoji => emoji.name === "JanusChamp");
         client.channels.cache.get('510941195929649153').send(`<@430140838345965595>, albercik ${ayy}`);
 
+
+    })();
+});
+
+var j4 = schedule.scheduleJob('0 0 1 * *', function () {
+    (async () => {
+
+        connection.query(`SELECT * FROM m_bans WHERE id='549223740228108288'`, function (err, rows) {
+            if (err) throw err;
+
+            if (rows.length < 1) {
+                sql = `INSERT INTO m_bans (id, bans) VALUES ('549223740228108288', 1)`;
+            } else {
+                sql = `UPDATE m_bans SET bans = 1 WHERE id = '549223740228108288'`
+            }
+            console.log(rows)
+        })
+        connection.query(sql);
 
     })();
 });
