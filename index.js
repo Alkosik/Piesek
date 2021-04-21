@@ -403,7 +403,7 @@ var j3 = schedule.scheduleJob('1 1 * * *', function () {
 var j4 = schedule.scheduleJob('0 0 1 * *', function () {
     (async () => {
 
-        connection.query(`SELECT * FROM m_bans WHERE id='549223740228108288'`, function (err, rows) {
+        connection.query(`SELECT * FROM m_bans WHERE id='549223740228108288' OR id='284366115348414466'`, function (err, rows) {
             if (err) throw err;
 
             if (rows.length < 1) {

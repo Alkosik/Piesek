@@ -37,12 +37,17 @@ module.exports = {
         if (!banMember) return message.channel.send("**Tej osoby nie ma na tym serwerze**");
         if (banMember === message.member) return message.channel.send("**Nie możesz zbanować siebie kekw**")
         if (banMember === grisza) {
-            connection.query(`SELECT * FROM m_bans WHERE id = '549223740228108288'`, function (err, rows) {
+            connection.query(`SELECT * FROM m_bans WHERE id = '${message.author.id}'`, function (err, rows) {
                 if (message.author.id == '549223740228108288') {
                     if (rows[0].bans <= 0) {
                         return message.channel.send("**Nie ma banowania griszy essa ;)**")
                     } 
                 }
+                else if (message.author.id == '284366115348414466') {
+                    if (rows[0].bans <= 0) {
+                        return message.channel.send("**Nie ma banowania griszy essa ;)**")
+                    } 
+                } else return message.channel.send("**Nie ma banowania griszy essa ;)**")
             })
         }
         if (banMember === nobody) return message.channel.send("**Nie ma banowania sebastiana slowika essa ;)**")
