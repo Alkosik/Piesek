@@ -41,12 +41,14 @@ module.exports = {
                 if (message.author.id == '549223740228108288') {
                     if (rows[0].bans <= 0) {
                         return message.channel.send("**Nie ma banowania griszy essa ;)**")
-                    } 
+                    }
+                    connection.query(`UPDATE m_bans SET bans = 0 WHERE id = '549223740228108288'`)
                 }
                 else if (message.author.id == '284366115348414466') {
                     if (rows[0].bans <= 0) {
                         return message.channel.send("**Nie ma banowania griszy essa ;)**")
-                    } 
+                    }
+                    connection.query(`UPDATE m_bans SET bans = 0 WHERE id = '284366115348414466'`)
                 } else return message.channel.send("**Nie ma banowania griszy essa ;)**")
             })
         }
