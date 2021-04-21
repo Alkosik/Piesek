@@ -407,7 +407,7 @@ var j4 = schedule.scheduleJob('0 0 1 * *', function () {
             if (err) throw err;
 
             if (rows.length < 1) {
-                sql = `INSERT INTO m_bans (id, bans) VALUES ('549223740228108288', 1)`;
+                sql = `INSERT INTO m_bans (bans) VALUES ('549223740228108288', 1)`;
             } else {
                 sql = `UPDATE m_bans SET bans = 1 WHERE id = '549223740228108288'`
             }
