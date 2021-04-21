@@ -159,7 +159,9 @@ client.on('message', message => {
             }
 
             if (message.author.id != client.user.id) {
-                connection.query(sql);
+                connection.query(sql, function (error, results, fields) {
+                    if (error) throw error;
+                  });
             }
 
             if (originalXp < 500 && updatedXp >= 500) {
@@ -206,7 +208,9 @@ client.on('message', message => {
                             sql = `UPDATE acc_event SET points = ${updatedPoints} WHERE id = '${message.author.id}'`;
                             console.log(`Adding ${loggedPoints} to ${message.author.username}`);
 
-                            connection.query(sql);
+                            connection.query(sql, function (error) {
+                                if (error) throw error;
+                              });
 
                             // Adds the user to the cooldown set
                             talkedRecently.add(message.author.id);
