@@ -37,9 +37,7 @@ module.exports = {
         let nobody = message.guild.members.cache.get('284366115348414466') || message.guild.members.cache.find(g => g.user.username.toLowerCase() == 'nobody') || message.guild.members.cache.find(gre => gre.displayName.toLowerCase() === 'nobody');
         if (!banMember) return message.channel.send("**Tej osoby nie ma na tym serwerze**");
         if (banMember === message.member) return message.channel.send("**Nie możesz zbanować siebie kekw**")
-        if (banMember === grisza && rows[0].bans <= 0) {
-            return message.channel.send("**Nie ma banowania griszy essa ;)**")
-        }
+        if (banMember === grisza && rows[0].bans <= 0) return message.channel.send("**Nie ma banowania griszy essa ;)**")
         if (banMember === nobody) return message.channel.send("**Nie ma banowania sebastiana slowika essa ;)**")
         if (banMember.roles.cache.some(r => r.name === "Administracja")) return message.channel.send("**Administracja nie może być banowana**")
 
