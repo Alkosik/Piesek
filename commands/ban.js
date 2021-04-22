@@ -36,22 +36,11 @@ module.exports = {
         let nobody = message.guild.members.cache.get('284366115348414466') || message.guild.members.cache.find(g => g.user.username.toLowerCase() == 'nobody') || message.guild.members.cache.find(gre => gre.displayName.toLowerCase() === 'nobody');
         if (!banMember) return message.channel.send("**Tej osoby nie ma na tym serwerze**");
         if (banMember === message.member) return message.channel.send("**Nie możesz zbanować siebie kekw**")
-        if (banMember === grisza) {
-            connection.query(`SELECT * FROM m_bans WHERE id = '${message.author.id}'`, function (err, rows) {
-                if (message.author.id == '549223740228108288') {
-                    if (rows[0].bans <= 0) {
+        connection.query(`SELECT * FROM m_bans WHERE id = '${message.author.id}'`, function (err, rows) {
+            if (banMember === grisza && rows[0].bans <= 0) {
                         return message.channel.send("**Nie ma banowania griszy essa ;)**")
-                    }
-                    connection.query(`UPDATE m_bans SET bans = 0 WHERE id = '549223740228108288'`)
-                }
-                else if (message.author.id == '284366115348414466') {
-                    if (rows[0].bans <= 0) {
-                        return message.channel.send("**Nie ma banowania griszy essa ;)**")
-                    }
-                    connection.query(`UPDATE m_bans SET bans = 0 WHERE id = '284366115348414466'`)
-                } else return message.channel.send("**Nie ma banowania griszy essa ;)**")
-            })
-        }
+            }
+        })
         if (banMember === nobody) return message.channel.send("**Nie ma banowania sebastiana slowika essa ;)**")
         if (banMember.roles.cache.some(r => r.name === "Administracja")) return message.channel.send("**Administracja nie może być banowana**")
 
