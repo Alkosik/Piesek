@@ -2,6 +2,7 @@ module.exports = {
     category: 'Music',
     name: 'play',
     description: 'Play',
+    aliases: ['p'],
     slash: false,
     testOnly: false,
     callback: ({
