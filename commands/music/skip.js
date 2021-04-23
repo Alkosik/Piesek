@@ -10,6 +10,7 @@ module.exports = {
         message,
         args
     }) => {
+        if (!message.member.roles.cache.some(r => r.name === "DJ")) return message.channel.send('**Nie masz permisji do opierdalania gały - [DJ]**');
         if (!message.member.voice.channel) return message.channel.send(`${client.emotes.error} - Nie jesteś na kanle głosowym`);
 
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send(`${client.emotes.error} - Nie jesteś na tym samym kanale głosowym`);

@@ -55,12 +55,12 @@ module.exports = {
         if (reason) {
             var sembed = new MessageEmbed()
                 .setColor("GREEN")
-                .setDescription(`**${banMember.user.username}** zostal zbanoway za **${reason}**`)
+                .setDescription(`**${banMember.user.username}** zostal zbanoway za **${reason}** \n Przez **${message.author.username}**`)
             message.channel.send(sembed)
         } else {
             var sembed2 = new MessageEmbed()
                 .setColor("GREEN")
-                .setDescription(`**${banMember.user.username}** zostal zbanoway`)
+                .setDescription(`**${banMember.user.username}** zostal zbanoway \n Przez **${message.author.username}**`)
             message.channel.send(sembed2)
         }
         const embed = new MessageEmbed()

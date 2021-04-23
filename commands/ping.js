@@ -2,7 +2,7 @@ module.exports = {
 	category: 'Utility',
 	name: 'ping',
 	description: 'Ping!',
-	callback: ({ message }) => {
-		message.channel.send('Pong.');
+	callback: ({ message, client }) => {
+		message.channel.send(`${client.emotes.success} - Ping : **${client.ws.ping}ms** !`);
 	},
 };
