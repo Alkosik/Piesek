@@ -43,10 +43,15 @@ module.exports = {
 		console.log(`Attempting to register commands at guild: ${guildId}`);
 		(async () => {
 
+			const commands = await getApp(guildId).commands.get()
+			console.log(commands)
+
 			new WOKCommands(client, {
 				commandsDir: 'commands',
 				testServers: [guildId],
 			}).setDefaultPrefix('gs')
+
+			//await getApp(guildId).commands('835043662123237376').delete()
 
 		})();
 

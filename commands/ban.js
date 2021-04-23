@@ -19,6 +19,8 @@ module.exports = {
     description: 'Ban',
     minArgs: 2,
     expectedArgs: '<Osoba> <Powód>',
+    slash: false,
+    testOnly: false,
     callback: async ({
         message,
         args
