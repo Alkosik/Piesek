@@ -15,6 +15,7 @@ const client = new Discord.Client({
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+const player = fs.readdirSync('./player').filter(file => file.endsWith('.js'));
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
@@ -34,7 +35,14 @@ var schedule = require('node-schedule');
 const {
     kill
 } = require('process');
-//const asyncio = require('asyncio');
+
+//#region Player vars
+const { Player } = require('discord-player');
+client.player = new Player(client);
+client.config = require('./config/bot');
+client.emotes = client.config.emojis;
+client.filters = client.config.filters;
+//#endregion
 
 app.use('/assets', express.static('assets'))
 app.use(bodyParser.urlencoded({
@@ -76,6 +84,13 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(...args, client));
     }
 }
+
+// Player
+for (const file of player) {
+    console.log(`Loading discord-player event ${file}`);
+    const event = require(`./player/${file}`);
+    client.player.on(file.split(".")[0], event.bind(null, client));
+};
 
 //#endregion
 
