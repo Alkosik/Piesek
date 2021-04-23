@@ -51,7 +51,7 @@ module.exports = {
 				testServers: [guildId],
 			}).setDefaultPrefix('gs')
 
-			await getApp(guildId).commands('829978324045398057').delete()
+			//await getApp(guildId).commands('829978324045398057').delete()
 
 		})();
 
