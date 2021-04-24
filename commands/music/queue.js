@@ -1,3 +1,7 @@
+const {
+    MessageEmbed
+} = require('discord.js');
+
 module.exports = {
     category: 'Music',
     name: 'queue',
@@ -10,13 +14,23 @@ module.exports = {
         message,
         args
     }) => {
-        if (!message.member.voice.channel) return message.channel.send(`${client.emotes.error} - Nie jesteś na kanale głosowym`);
+        let response;
+        if (!message.member.voice.channel) response = `${client.emotes.error} - **Nie jesteś na kanale głosowym**`;
 
-        if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send(`${client.emotes.error} - Nie jesteś na tym samym kanale głosowym`);
+        if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) response = `${client.emotes.error} - **Nie jesteś na tym samym kanale głosowym**`;
 
         const queue = client.player.getQueue(message);
 
-        if (!client.player.getQueue(message)) return message.channel.send(`${client.emotes.error} - Ale kurwa debilu nic aktualnie nie leci to co ty niby chcesz zobaczyć w tej kolejce`);
+        if (!client.player.getQueue(message)) response = `${client.emotes.error} - Ale kurwa debilu nic aktualnie nie leci to co ty niby chcesz zobaczyć w tej kolejce`;
+
+        if(!response){
+            //
+        } else {
+            var errembed = new MessageEmbed()
+                .setColor("RED")
+                .setDescription(response)
+            return message.channel.send(errembed);
+        }
 
         message.channel.send(`**Kolejka serwera - ${message.guild.name} ${client.player.getQueue(message).loopMode ? `(${client.emotes.loop})` : ''}**\nAktualnie: ${queue.playing.title} | ${queue.playing.author}\n\n` + (queue.tracks.map((track, i) => {
             return `**#${i + 1}** - ${track.title} | ${track.author} (dodane przez: ${track.requestedBy.username})`

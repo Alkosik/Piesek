@@ -1,3 +1,7 @@
+const {
+    MessageEmbed
+} = require('discord.js');
+
 module.exports = {
     category: 'Music',
     name: 'filter',
@@ -10,17 +14,27 @@ module.exports = {
         message,
         args
     }) => {
-        if (!message.member.voice.channel) return message.channel.send(`${client.emotes.error} - Nie jesteś na kanle głosowym`);
+        let response;
+        if (!message.member.voice.channel) response = `${client.emotes.error} - **Nie jesteś na kanale głosowym**`;
 
-        if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send(`${client.emotes.error} - Nie jesteś na tym samym kanale głosowym`);
+        if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) response = `${client.emotes.error} - **Nie jesteś na tym samym kanale głosowym**`;
 
-        if (!client.player.getQueue(message)) return message.channel.send(`${client.emotes.error} - Ale nic nie leci kurwa debilu to na co ci mam ten filtr nałożyć`);
+        if (!client.player.getQueue(message)) response = `${client.emotes.error} - Ale nic nie leci kurwa debilu to na co ci mam ten filtr nałożyć`;
 
-        if (!args[0]) return message.channel.send(`${client.emotes.error} - Podaj prawidłowy filtr.`);
+        if (!args[0]) response = `${client.emotes.error} - Podaj prawidłowy filtr.`;
 
         const filterToUpdate = client.filters.find((x) => x.toLowerCase() === args[0].toLowerCase());
 
-        if (!filterToUpdate) return message.channel.send(`${client.emotes.error} - Ten filtr nie istnieje, spróbuj np. (8D, vibrato, pulsator...)`);
+        if (!filterToUpdate) response = `${client.emotes.error} - Ten filtr nie istnieje, spróbuj np. (8D, vibrato, pulsator...)`;
+
+        if(!response){
+            //
+        } else {
+            var errembed = new MessageEmbed()
+                .setColor("RED")
+                .setDescription(response)
+            return message.channel.send(errembed);
+        }
 
         const filtersUpdated = {};
 

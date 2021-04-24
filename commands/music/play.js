@@ -1,3 +1,7 @@
+const {
+    MessageEmbed
+} = require('discord.js');
+
 module.exports = {
     category: 'Music',
     name: 'play',
@@ -5,17 +9,26 @@ module.exports = {
     aliases: ['p'],
     slash: false,
     testOnly: false,
-    callback: ({
+    callback: async ({
         client,
         message,
         args
     }) => {
-        if (!message.member.voice.channel) return message.channel.send(`${client.emotes.error} - **Nie jesteś na kanale głosowym**`);
 
-        if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send(`${client.emotes.error} - **Nie jesteś na tym samym kanale głosowym**`);
+        let response;
+        if (!message.member.voice.channel) response = `${client.emotes.error} - **Nie jesteś na kanale głosowym**`;
 
-        if (!args[0]) return message.channel.send(`${client.emotes.error} - **Podaj nazwę piosenki**`);
+        if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) response = `${client.emotes.error} - **Nie jesteś na tym samym kanale głosowym**`;
 
-        client.player.play(message, args.join(" "), { firstResult: true });
+        if (!args[0]) response = `${client.emotes.error} - **Podaj nazwę piosenki**`;
+
+        if(!response){
+            client.player.play(message, args.join(" "), { firstResult: true });
+        } else {
+            var errembed = new MessageEmbed()
+                .setColor("RED")
+                .setDescription(response)
+            return message.channel.send(errembed);
+        }
     }
 };
