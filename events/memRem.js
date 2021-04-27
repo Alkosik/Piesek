@@ -1,15 +1,20 @@
 module.exports = {
-	name: 'guildMemberAdd',
+	name: 'guildMemberRemove',
 	execute(member, client) {
 		console.log("kurwa")
 		//client.channels.cache.get('511224486545326100')
-		console.log(`**${member.tag}** dołączył na serwer.`);
+		console.log(`**${member.tag}** left the server.`);
 
-		//const guild = client.guilds.cache.find(guild => {guild.id == "510941195267080214"});
+        //#region MemCount
 		const guild = client.guilds.cache.get("510941195267080214");
-		//var memberCount = guild.members.cache.filter(member => !member.user.bot).size;  
       	var memberCountChannel = client.channels.cache.get("726734001347231784");
 		let memCount = guild.memberCount;
       	memberCountChannel.setName(`Ludzie: ${memCount} 👤`);
-	},
+        //#endregion
+	
+        const channel = member.guild.channels.cache.find(ch => ch.id === '511224486545326100');
+        if (!channel) return;
+
+        channel.send(`**${member.username}** opuścił serwer, albo został wyjebany.`);
+    },
 };
