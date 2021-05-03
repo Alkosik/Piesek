@@ -194,6 +194,26 @@ client.on('message', message => {
                             }
                         });
                     })();
+
+                    if (rows[0].level >= 100) {
+                        const role = member.guild.roles.cache.find(role => role.name === "Elitarne Słonie");
+                        member.roles.add(role);
+                    } else if (rows[0].level >= 50) {
+                        const role = member.guild.roles.cache.find(role => role.name === "Best Słonie Ever <3");
+                        member.roles.add(role);
+                    } else if (rows[0].level >= 30) {
+                        const role = member.guild.roles.cache.find(role => role.name === "Zaawansowane Słonie");
+                        member.roles.add(role);
+                    } else if (rows[0].level >= 15) {
+                        const role = member.guild.roles.cache.find(role => role.name === "Fajne Słonie");
+                        member.roles.add(role);
+                    } else if (rows[0].level >= 5) {
+                        const role = member.guild.roles.cache.find(role => role.name === "Dobre Słonie");
+                        member.roles.add(role);
+                    } else if (rows[0].level >= 1) {
+                        const role = member.guild.roles.cache.find(role => role.name === "Słoniki");
+                        member.roles.add(role);
+                    }
                 }
             }
 
@@ -202,26 +222,6 @@ client.on('message', message => {
                     if (error) throw error;
                 });
             }
-
-            if (rows[0].level >= 100) {
-				const role = member.guild.roles.cache.find(role => role.name === "Elitarne Słonie");
-				member.roles.add(role);
-			} else if (rows[0].level >= 50) {
-				const role = member.guild.roles.cache.find(role => role.name === "Best Słonie Ever <3");
-				member.roles.add(role);
-			} else if (rows[0].level >= 30) {
-				const role = member.guild.roles.cache.find(role => role.name === "Zaawansowane Słonie");
-				member.roles.add(role);
-			} else if (rows[0].level >= 15) {
-				const role = member.guild.roles.cache.find(role => role.name === "Fajne Słonie");
-				member.roles.add(role);
-			} else if (rows[0].level >= 5) {
-				const role = member.guild.roles.cache.find(role => role.name === "Dobre Słonie");
-				member.roles.add(role);
-			} else if (rows[0].level >= 1) {
-				const role = member.guild.roles.cache.find(role => role.name === "Słoniki");
-				member.roles.add(role);
-			}
 
             connection.query(`SELECT * FROM acc_event WHERE id = ${message.author.id}`, function (err, rows) {
                 if (err) throw err;
@@ -317,6 +317,16 @@ client.on('message', message => {
             });
         })();
     }
+
+    connection.query(`SELECT * FROM acc_event WHERE id = ${message.author.id}`, function (err, rows) {
+        if (err) throw err;
+
+        if(rows[0].username != message.author.username) {
+            sql = `UPDATE acc_event SET username = '${message.author.username}' WHERE id = ${message.author.id}`
+        }
+        connection.query(sql);
+    })
+
 })
 
 client.on('message', message => {
