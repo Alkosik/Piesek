@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7173537454282136"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,14 +14,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <h1 class="title">Gang Słoni</h1>
     <p class="subtitle">ranking</h1>
 
-    <div class="leaderboard">
-        <h2 class="t1"><%= top1 %></h2>
-        <h2 class="t2"><%= top2 %></h2>
-        <h2 class="t3"><%= top3 %></h2>
-    </div>
+        <div id="wrapper"></div>
+        <div class="leaderboard1" id="lb">
+            <h1 class="lbtitle">Level</h1>
+            <h2 class="t1"><%= lvl_top1 %></h2>
+            <h2 class="t2"><%= lvl_top2 %></h2>
+            <h2 class="t3"><%= lvl_top3 %></h2>
+        </div>
+        <div class="leaderboard2" id="lb">
+            <h1 class="lbtitle">Konkurs</h1>
+            <h2 class="t1"><%= acc_top1 %></h2>
+            <h2 class="t2"><%= acc_top2 %></h2>
+            <h2 class="t3"><%= acc_top3 %></h2>
+        </div>
+        <div id="wrapper"></div>
 </body>
+
 </html>

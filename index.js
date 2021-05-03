@@ -126,14 +126,26 @@ app.get('/', function (req, res) {
     connection.query(`SELECT username, points FROM acc_event ORDER BY points DESC LIMIT 5`, function (err, rows) {
         if (err) throw err;
 
-        var top1 = rows[0].username;
-        var top2 = rows[1].username;
-        var top3 = rows[2].username;
-        res.render('pages/index.ejs', {
-            top1: top1,
-            top2: top2,
-            top3: top3
-        });
+        var acc_top1 = rows[0].username + ` (${rows[0].points})`;
+        var acc_top2 = rows[1].username + ` (${rows[1].points})`;
+        var acc_top3 = rows[2].username + ` (${rows[2].points})`;
+
+        connection.query(`SELECT username, level FROM account ORDER BY level DESC LIMIT 5`, function (err, rows) {
+            if (err) throw err;
+
+            var lvl_top1 = rows[0].username + ` (${rows[0].level})`;
+            var lvl_top2 = rows[1].username + ` (${rows[1].level})`;
+            var lvl_top3 = rows[2].username + ` (${rows[2].level})`;
+
+            res.render('pages/index.ejs', {
+                acc_top1: acc_top1,
+                acc_top2: acc_top2,
+                acc_top3: acc_top3,
+                lvl_top1: lvl_top1,
+                lvl_top2: lvl_top2,
+                lvl_top3: lvl_top3
+            });
+        })
     })
 });
 
