@@ -1,11 +1,18 @@
-body{
+body {
     font-family: 'Poppins', sans-serif;
-    background: darkgray;
+    background: rgb(12, 12, 12);
 }
 
 .title{
+    color: white;
     text-align: center;
     font-size: 72px;
+}
+.subtitle{
+    color: white;
+    text-align: center;
+    font-size: 36px;
+    transform: translateY(-80%);
 }
 
 .btn {
@@ -22,8 +29,28 @@ body{
     color: black;
 }
 
-.buttons{
+.buttons {
     line-height: 200px;
     height: 200px;
     text-align: center;
+}
+
+.leaderboard {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+    text-shadow: 1px 1px black;
+}
+
+.t1 {
+    color: gold;
+}
+
+.t2 {
+    color: silver;
+}
+
+.t3 {
+    color: #cd7f32;
 }

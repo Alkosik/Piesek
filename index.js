@@ -1,21 +1,27 @@
 //#region vars
 const fs = require('fs');
 const Discord = require('discord.js');
+
+const {
+    prefix,
+    ownerId
+} = require('./config.json');
+
+const client = new Discord.Client({
+    partials: ['MESSAGE', 'REACTION'],
+});
+
+client.commands = new Discord.Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+const player = fs.readdirSync('./player').filter(file => file.endsWith('.js'));
+
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
 var favicon = require('serve-favicon');
-const {
-    prefix
-} = require('./config.json');
-const client = new Discord.Client({
-    partials: ['MESSAGE', 'REACTION'],
-});
-client.commands = new Discord.Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
-const player = fs.readdirSync('./player').filter(file => file.endsWith('.js'));
+
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
@@ -37,13 +43,16 @@ const {
 } = require('process');
 
 //#region Player vars
-const { Player } = require('discord-player');
+const {
+    Player
+} = require('discord-player');
 client.player = new Player(client);
 client.config = require('./config/bot');
 client.emotes = client.config.emojis;
 client.filters = client.config.filters;
 //#endregion
 
+app.set('view engine', 'ejs');
 app.use('/assets', express.static('assets'))
 app.use(bodyParser.urlencoded({
     extended: false
@@ -112,22 +121,25 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     }
 });
 
-// http
-//     .createServer((request, response) => {
-//         response.writeHead(200, {
-//             "Content-Type": "text/plain"
-//         });
-//         response.write(utf8.encode("Gang Słoni Dev Team"));
-//         response.end();
-//     })
-//     .listen(process.env.PORT);
-// console.log("Server listening on port: " + process.env.PORT);
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/html/index.html'));
+    //res.sendFile(path.join(__dirname + '/html/index.ejs'));
+    connection.query(`SELECT username, points FROM acc_event ORDER BY points DESC LIMIT 5`, function (err, rows) {
+        if (err) throw err;
+
+        var top1 = rows[0].username;
+        var top2 = rows[1].username;
+        var top3 = rows[2].username;
+        res.render('pages/index.ejs', {
+            top1: top1,
+            top2: top2,
+            top3: top3
+        });
+    })
 });
 
-app.listen(process.env.PORT);
-console.log('Server listening on port: ' + process.env.PORT);
+app.listen(process.env.PORT, () => {
+    console.log('Server listening on port: ' + process.env.PORT);
+});
 
 //#region client.on('message)
 client.on('message', message => {
@@ -287,65 +299,6 @@ client.on('message', message => {
 });
 //#endregion
 
-//#region guildMemberAdd
-
-// client.on('guildMemberAdd', async member => {
-//     const channel = member.guild.channels.cache.find(ch => ch.id === '511224486545326100');
-//     if (!channel) return;
-
-//     const canvas = Canvas.createCanvas(700, 250);
-//     const ctx = canvas.getContext('2d');
-
-//     const background = await Canvas.loadImage('./images/background.png');
-//     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-
-//     ctx.strokeStyle = '#74037b';
-//     ctx.strokeRect(0, 0, canvas.width, canvas.height);
-
-//     // Slightly smaller text placed above the member's display name
-//     ctx.font = '38px Cascadia Code';
-//     ctx.fillStyle = '#ffffff';
-//     ctx.fillText('Witaj na serwerze,', canvas.width / 2.5, canvas.height / 3.5);
-
-//     // Add an exclamation point here and below
-//     const applyText = (canvas, text) => {
-//         const ctx = canvas.getContext('2d');
-
-//         // Declare a base size of the font
-//         let fontSize = 70;
-
-//         do {
-//             // Assign the font to the context and decrement it so it can be measured again
-//             ctx.font = `${fontSize -= 10}px Cascadia Code`;
-//             // Compare pixel width of the text to the canvas minus the approximate avatar size
-//         } while (ctx.measureText(text).width > canvas.width - 300);
-
-//         // Return the result to use in the actual canvas
-//         return ctx.font;
-//     };
-//     ctx.fillStyle = '#ffffff';
-//     if (member.displayName.length <= 8) {
-//         ctx.font = '46px Cascadia Code';
-//     } else {
-//         ctx.font = '38px Cascadia Code';
-//     }
-//     ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8); //2.5, 1.8
-
-//     ctx.beginPath();
-//     ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
-//     ctx.closePath();
-//     ctx.clip();
-
-//     const avatar = await Canvas.loadImage(member.user.displayAvatarURL({
-//         format: 'png'
-//     }));
-//     ctx.drawImage(avatar, 25, 25, 200, 200);
-
-//     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
-
-//     channel.send(`Witamy na serwerze, ${member}!`, attachment);
-// });
-//#endregion
 
 //////////////////////////////////
 //                              //
@@ -375,7 +328,7 @@ client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => { // Listeing to
 });
 //#endregion
 
-var j = schedule.scheduleJob('0 12 1 * *', function () {
+var main_event = schedule.scheduleJob('0 12 1 * *', function () {
     (async () => {
 
         connection.query(`SELECT * FROM acc_event WHERE points=(SELECT MAX(points) FROM acc_event)`, function (err, rows) {
@@ -395,7 +348,7 @@ var j = schedule.scheduleJob('0 12 1 * *', function () {
     })();
 });
 
-var j2 = schedule.scheduleJob('0 0 12 * *', function () {
+var Erratas = schedule.scheduleJob('0 0 12 * *', function () {
     (async () => {
 
 
@@ -405,7 +358,7 @@ var j2 = schedule.scheduleJob('0 0 12 * *', function () {
     })();
 });
 
-var j3 = schedule.scheduleJob('1 1 * * *', function () {
+var JanusChamp = schedule.scheduleJob('1 1 * * *', function () {
     (async () => {
 
         const ayy = client.emojis.cache.find(emoji => emoji.name === "JanusChamp");
@@ -415,7 +368,7 @@ var j3 = schedule.scheduleJob('1 1 * * *', function () {
     })();
 });
 
-var j4 = schedule.scheduleJob('0 0 1 * *', function () {
+var BanHealth = schedule.scheduleJob('0 0 1 * *', function () {
     (async () => {
 
         connection.query(`SELECT * FROM m_bans WHERE id='549223740228108288' OR id='284366115348414466'`, function (err, rows) {
