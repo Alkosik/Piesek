@@ -49,6 +49,8 @@ module.exports = {
 			new WOKCommands(client, {
 				commandsDir: 'commands',
 				testServers: [guildId],
+				showWarns: false,
+				del: 5,
 			}).setDefaultPrefix('gs')
 
 			//await getApp(guildId).commands('829978324045398057').delete()

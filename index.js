@@ -21,13 +21,18 @@ var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
 var favicon = require('serve-favicon');
+const http = require("http");
+const server = http.createServer(app);
+const {
+    Server
+} = require("socket.io");
+const io = new Server(server);
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 //const config = require("./")
 const token = process.env.TOKEN;
-const http = require("http");
 const utf8 = require('utf8');
 const mysql = require('mysql');
 const cooldowns = new Discord.Collection();
@@ -149,7 +154,20 @@ app.get('/', function (req, res) {
     })
 });
 
-app.listen(process.env.PORT, () => {
+io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+
+    socket.on('chat message', (msg) => {
+        console.log('message: ' + msg);
+        io.emit('chat message', msg);
+      });
+});
+
+server.listen(process.env.PORT, () => {
     console.log('Server listening on port: ' + process.env.PORT);
 });
 
@@ -321,12 +339,12 @@ client.on('message', message => {
     connection.query(`SELECT * FROM acc_event WHERE id = ${message.author.id}`, function (err, rows) {
         if (err) throw err;
 
-        if(rows.length <= 0) return;
+        if (rows.length <= 0) return;
 
-        if(rows[0].username != message.author.username) {
+        if (rows[0].username != message.author.username) {
             sql = `UPDATE acc_event SET username = '${message.author.username}' WHERE id = ${message.author.id}`
+            connection.query(sql);
         }
-        connection.query(sql);
     })
 
 })
