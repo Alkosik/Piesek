@@ -321,6 +321,8 @@ client.on('message', message => {
     connection.query(`SELECT * FROM acc_event WHERE id = ${message.author.id}`, function (err, rows) {
         if (err) throw err;
 
+        if(!rows[0].length <= 0) return;
+
         if(rows[0].username != message.author.username) {
             sql = `UPDATE acc_event SET username = '${message.author.username}' WHERE id = ${message.author.id}`
         }
