@@ -164,7 +164,7 @@ io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
         io.emit('chat message', msg);
-      });
+    });
 });
 
 server.listen(process.env.PORT, () => {
@@ -353,6 +353,24 @@ client.on('message', message => {
     if (message.content === '!join') {
         client.emit('guildMemberAdd', message.member);
     }
+
+    connection.query(`SELECT username, level FROM account ORDER BY level DESC LIMIT 5`,
+        function (err, rows) {
+            if (err) throw err;
+
+            var lvl_top1 = rows[0].username + ` (${rows[0].level})`;
+            var lvl_top2 = rows[1].username + ` (${rows[1].level})`;
+            var lvl_top3 = rows[2].username + ` (${rows[2].level})`;
+
+
+            connection.query(`SELECT username, points FROM acc_event ORDER BY points DESC LIMIT 5`, function (err, rows) {
+                if (err) throw err;
+                var acc_top1 = rows[0].username + ` (${rows[0].points})`;
+                var acc_top2 = rows[1].username + ` (${rows[1].points})`;
+                var acc_top3 = rows[2].username + ` (${rows[2].points})`;
+                io.emit('web_update', acc_top1, acc_top2, acc_top3, lvl_top1, lvl_top2, lvl_top3);
+            })
+        })
 });
 //#endregion
 

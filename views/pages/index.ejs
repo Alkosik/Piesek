@@ -22,18 +22,18 @@
     <p class="subtitle">ranking</h1>
 
         <div id="wrapper"></div>
-        <div class="leaderboard1" id="lb">
+        <ul class="leaderboard1" id="lb">
             <h1 class="lbtitle">Level</h1>
-            <h2 class="t1"><%= lvl_top1 %></h2>
-            <h2 class="t2"><%= lvl_top2 %></h2>
-            <h2 class="t3"><%= lvl_top3 %></h2>
-        </div>
-        <div class="leaderboard2" id="lb">
+            <h2 class="t1 child" id="child"><%= lvl_top1 %></h2>
+            <h2 class="t2 child" id="child"><%= lvl_top2 %></h2>
+            <h2 class="t3 child" id="child"><%= lvl_top3 %></h2>
+        </ul>
+        <ul class="leaderboard2" id="lb">
             <h1 class="lbtitle">Konkurs</h1>
-            <h2 class="t1"><%= acc_top1 %></h2>
-            <h2 class="t2"><%= acc_top2 %></h2>
-            <h2 class="t3"><%= acc_top3 %></h2>
-        </div>
+            <h2 class="t1 child" id="child"><%= acc_top1 %></h2>
+            <h2 class="t2 child" id="child"><%= acc_top2 %></h2>
+            <h2 class="t3 child" id="child"><%= acc_top3 %></h2>
+        </ul>
         <div id="wrapper"></div>
 
         <ul id="messages"></ul>
@@ -45,22 +45,52 @@
         <script>
             var socket = io();
 
-            var form = document.getElementById('form');
-            var input = document.getElementById('input');
+            var leaderboard1 = document.getElementsByClassName('leaderboard1')[0];
+            var leaderboard2 = document.getElementsByClassName('leaderboard2')[0];
 
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                if (input.value) {
-                    socket.emit('chat message', input.value);
-                    input.value = '';
-                }
-            });
+            socket.on('web_update', function (acc_top1, acc_top2, acc_top3, lvl_top1, lvl_top2, lvl_top3) {
 
-            socket.on('chat message', function (msg) {
-                var item = document.createElement('li');
-                item.textContent = msg;
-                messages.appendChild(item);
-                window.scrollTo(0, document.body.scrollHeight);
+                var old_children1 = document.getElementsByClassName('child')[0];
+                var old_children2 = document.getElementsByClassName('child')[1];
+                var old_children3 = document.getElementsByClassName('child')[2];
+                var old_children4 = document.getElementsByClassName('child')[3];
+                var old_children5 = document.getElementsByClassName('child')[4];
+                var old_children6 = document.getElementsByClassName('child')[5];
+                old_children1.remove();
+                old_children2.remove();
+                old_children3.remove();
+                old_children4.remove();
+                old_children5.remove();
+                old_children6.remove();
+                
+                var lvl1 = document.createElement('h2');
+                var lvl2 = document.createElement('h2');
+                var lvl3 = document.createElement('h2');
+                var acc1 = document.createElement('h2');
+                var acc2 = document.createElement('h2');
+                var acc3 = document.createElement('h2');
+
+                lvl1.textContent = lvl_top1;
+                lvl1.className = 't1 child';
+                lvl2.textContent = lvl_top2;
+                lvl2.className = 't2 child';
+                lvl3.textContent = lvl_top3;
+                lvl3.className = 't3 child';
+
+                leaderboard1.appendChild(lvl1);
+                leaderboard1.appendChild(lvl2);
+                leaderboard1.appendChild(lvl3);
+
+                acc1.textContent = acc_top1;
+                acc1.className = 't1 child';
+                acc2.textContent = acc_top2;
+                acc2.className = 't2 child';
+                acc3.textContent = acc_top3;
+                acc3.className = 't3 child';
+
+                leaderboard2.appendChild(acc1);
+                leaderboard2.appendChild(acc2);
+                leaderboard2.appendChild(acc3);
             });
         </script>
 </body>
