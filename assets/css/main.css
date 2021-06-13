@@ -5,13 +5,13 @@ body {
     margin: 0;
 }
 
-.title{
+.title {
     color: white;
     text-align: center;
     font-size: 72px;
 }
 
-.subtitle{
+.subtitle {
     color: white;
     text-align: center;
     font-size: 36px;
@@ -26,7 +26,7 @@ body {
     cursor: pointer;
     font-size: 20px;
 }
-  
+
 .btn:hover {
     background-color: white;
     color: black;
@@ -92,4 +92,39 @@ body {
 
 .t3 {
     color: #cd7f32;
+}
+
+
+.link {
+    justify-content: center;
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+a {
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+div {
+    color: white;
+    text-align: center;
+    
+}
+
+.owner {
+    color: gold;
+}
+
+.sec-owner {
+    color: darkgoldenrod;
+}
+
+.admin {
+    color: red;
 }

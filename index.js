@@ -154,6 +154,18 @@ app.get('/', function (req, res) {
     })
 });
 
+app.get('/stats', function(req, res) {
+    res.render('pages/stats.ejs', {
+
+    });
+});
+
+app.get('/admins', function(req, res) {
+    res.render('pages/admins.ejs', {
+
+    });
+});
+
 io.on('connection', (socket) => {
     console.log('a user connected');
 
