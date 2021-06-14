@@ -9,7 +9,7 @@ module.exports = {
     }) => {
 
         const getSummonerId = new Promise((resolve, reject) => {
-            https.get('https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Julxxis?api_key=RGAPI-6d20adaf-b3bf-4b5b-a28c-99b7ee3d5e15', (resp) => {
+            https.get('yikes', (resp) => {
                 let data = '';
 
                 resp.on('data', (chunk) => {
@@ -32,7 +32,7 @@ module.exports = {
             sumId = await getSummonerId;
             console.log(sumId);
 
-            https.get(`https://eun1.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${sumId}?api_key=RGAPI-6d20adaf-b3bf-4b5b-a28c-99b7ee3d5e15`, (resp) => {
+            https.get(`yikes`, (resp) => {
                 let data = '';
 
                 // A chunk of data has been received.
