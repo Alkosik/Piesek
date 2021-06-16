@@ -14,9 +14,10 @@ module.exports = {
         message,
         args
     }) => {
+        let response;
+
         if (!message.member.roles.cache.some(r => r.name === "DJ")) response = `${client.emotes.error} - **Nie masz permisji do opierdalania gały - [DJ]**`;
 
-        let response;
         if (!message.member.voice.channel) response = `${client.emotes.error} - **Nie jesteś na kanale głosowym**`;
 
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) response = `${client.emotes.error} - **Nie jesteś na tym samym kanale głosowym**`;
