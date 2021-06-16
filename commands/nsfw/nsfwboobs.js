@@ -7,6 +7,7 @@ module.exports = {
 	name: 'boobs',
 	description: 'boobs!',
 	callback: ({ message, args }) => {
+		if (message.channel.nsfw) {
 		(async () => {
 			let desire = args[0]
 			const image = await nsfw.boobs();
@@ -16,5 +17,6 @@ module.exports = {
 				.setImage(image);
 			message.channel.send(embed);
 		})();
+	}
 	},
 };

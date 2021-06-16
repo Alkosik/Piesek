@@ -7,6 +7,7 @@ module.exports = {
 	name: 'thigh',
 	description: 'thigh!',
 	callback: ({ message, args }) => {
+		if (message.channel.nsfw) {
 		(async () => {
 			let desire = args[0]
 			const image = await nsfw.thigh();
@@ -16,5 +17,8 @@ module.exports = {
 				.setImage(image);
 			message.channel.send(embed);
 		})();
+	} else {
+		message.reply("Ta komenda jest dostępna tylko na kanałach NSFW.");
+	}
 	},
 };

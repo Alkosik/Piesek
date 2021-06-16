@@ -7,6 +7,7 @@ module.exports = {
 	name: 'hthigh',
 	description: 'hthigh!',
 	callback: ({ message, args }) => {
+		if (message.channel.nsfw) {
 		(async () => {
 			let desire = args[0]
 			const image = await nsfw.hentaithigh();
@@ -16,5 +17,6 @@ module.exports = {
 				.setImage(image);
 			message.channel.send(embed);
 		})();
+	}
 	},
 };
