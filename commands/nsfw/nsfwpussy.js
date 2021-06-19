@@ -17,6 +17,8 @@ module.exports = {
 				.setImage(image);
 			message.channel.send(embed);
 		})();
+	} else {
+		message.reply("Ta komenda jest dostępna tylko na kanałach NSFW.");
 	}
 	},
 };

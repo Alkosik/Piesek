@@ -166,6 +166,12 @@ app.get('/admins', function(req, res) {
     });
 });
 
+app.get('/mods', function(req, res) {
+    res.render('pages/mods.ejs', {
+
+    });
+});
+
 io.on('connection', (socket) => {
     console.log('a user connected');
 

@@ -94,29 +94,6 @@ body {
     color: #cd7f32;
 }
 
-
-.link {
-    justify-content: center;
-    margin: auto;
-    width: 50%;
-    padding: 10px;
-}
-
-a {
-    text-align: center;
-    color: white;
-    text-decoration: none;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
-
-div {
-    color: white;
-    text-align: center;
-    
-}
-
 .owner {
     color: gold;
 }
