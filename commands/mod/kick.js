@@ -25,6 +25,7 @@ module.exports = {
         message,
         args
     }) => {
+        if (banMember.roles.cache.some(r => r.name === "Administracja")) return message.channel.send("**Administracja nie może być kickowana**")
         if (!message.member.roles.cache.some(r => r.name === "Administracja")) return message.channel.send('**Nie masz permisji do kickowania - [Administracja]**');
         if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.channel.send("**Nie mam permisji do kickowania! - [KICK_MEMBERS]**");
 
