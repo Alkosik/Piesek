@@ -1,0 +1,41 @@
+div {
+    color: white;
+    text-align: center; 
+}
+
+a {
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.owner {
+    color: #f600ff;
+}
+
+.open {
+    color: #03fc03;
+}
+
+.network-admin {
+    color: #00d5ff;
+}
+
+.main-admin {
+    color: #00b3d6;
+}
+
+.admin {
+    color: #009bbb;
+}
+
+.main-mod {
+    color: #ca43dc;
+}
+
+.mod {
+    color: #dfa1eb;
+}

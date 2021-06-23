@@ -1,9 +1,9 @@
-body {
+/* body {
     font-family: 'Poppins', sans-serif;
     background: rgb(12, 12, 12);
     height: 100%;
     margin: 0;
-}
+} */
 
 .title {
     color: white;
@@ -92,16 +92,4 @@ body {
 
 .t3 {
     color: #cd7f32;
-}
-
-.owner {
-    color: gold;
-}
-
-.sec-owner {
-    color: darkgoldenrod;
-}
-
-.admin {
-    color: red;
 }
