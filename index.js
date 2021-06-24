@@ -18,7 +18,10 @@ const player = fs.readdirSync('./player').filter(file => file.endsWith('.js'));
 
 var express = require('express');
 var app = express();
-var bodyParser = require('body-parser');
+const session = require("express-session");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 var path = require('path');
 var favicon = require('serve-favicon');
 const http = require("http");
@@ -59,9 +62,11 @@ client.filters = client.config.filters;
 
 app.set('view engine', 'ejs');
 app.use('/assets', express.static('assets'))
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+const sessionMiddleware = session({ secret: "gs", resave: false, saveUninitialized: false });
+app.use(sessionMiddleware);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(favicon(path.join(__dirname, 'images', 'favicon.ico')));
 
 const connection = mysql.createConnection({
@@ -74,6 +79,23 @@ const connection = mysql.createConnection({
 let levelup = 500; // Level Up EXP
 let purple = `RANDOM`;
 //#endregion
+
+const DUMMY_USER = {
+    id: 1,
+    username: "alkosik",
+};
+
+passport.use(
+    new LocalStrategy((username, password, done) => {
+      if (username === "alkosik" && password === "dupa") {
+        console.log("authentication OK");
+        return done(null, DUMMY_USER);
+      } else {
+        console.log("wrong credentials");
+        return done(null, false);
+      }
+    })
+  );
 
 function generateXp() { //Generating EXP
     return Math.floor(Math.random() * (10 - 5 + 1)) + 5; // Amount of EXP
@@ -172,6 +194,60 @@ app.get('/mods', function(req, res) {
     });
 });
 
+app.get('/auth', function(req, res) {
+    const isAuthenticated = !!req.user;
+    if (isAuthenticated) {
+    console.log(`user is authenticated, session is ${req.session.id}`);
+    } else {
+    console.log("unknown user");
+    }
+    res.render(isAuthenticated ? "pages/index.ejs" : "pages/login.ejs", { root: __dirname });
+})
+
+app.post(
+    "/login",
+    passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/",
+    })
+  );
+
+  app.post("/logout", (req, res) => {
+    console.log(`logout ${req.session.id}`);
+    const socketId = req.session.socketId;
+    if (socketId && io.of("/").sockets.get(socketId)) {
+      console.log(`forcefully closing socket ${socketId}`);
+      io.of("/").sockets.get(socketId).disconnect(true);
+    }
+    req.logout();
+    res.cookie("connect.sid", "", { expires: new Date() });
+    res.redirect("/");
+  });
+
+  passport.serializeUser((user, cb) => {
+    console.log(`serializeUser ${user.id}`);
+    cb(null, user.id);
+  });
+  
+  passport.deserializeUser((id, cb) => {
+    console.log(`deserializeUser ${id}`);
+    cb(null, DUMMY_USER);
+  });
+
+  const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+
+io.use(wrap(sessionMiddleware));
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.session()));
+
+io.use((socket, next) => {
+  if (socket.request.user) {
+    next();
+  } else {
+    next(new Error('unauthorized'))
+  }
+});
+
 io.on('connection', (socket) => {
     console.log('a user connected');
 
@@ -183,6 +259,15 @@ io.on('connection', (socket) => {
         console.log('message: ' + msg);
         io.emit('chat message', msg);
     });
+
+    socket.on('whoami', (cb) => {
+        cb(socket.request.user ? socket.request.user.username : '');
+      });
+    
+      const session = socket.request.session;
+      console.log(`saving sid ${socket.id} in session ${session.id}`);
+      session.socketId = socket.id;
+      session.save();
 });
 
 server.listen(process.env.PORT, () => {
