@@ -149,7 +149,10 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 });
 
 app.get('/', function (req, res) {
-    //res.sendFile(path.join(__dirname + '/html/index.ejs'));
+    res.render('pages/main.ejs')
+});
+
+app.get('/ranking', function(req, res) {
     connection.query(`SELECT username, points FROM acc_event ORDER BY points DESC LIMIT 5`, function (err, rows) {
         if (err) throw err;
 
@@ -164,7 +167,7 @@ app.get('/', function (req, res) {
             var lvl_top2 = rows[1].username + ` (${rows[1].level})`;
             var lvl_top3 = rows[2].username + ` (${rows[2].level})`;
 
-            res.render('pages/index.ejs', {
+            res.render('pages/ranking.ejs', {
                 acc_top1: acc_top1,
                 acc_top2: acc_top2,
                 acc_top3: acc_top3,
@@ -174,7 +177,7 @@ app.get('/', function (req, res) {
             });
         })
     })
-});
+})
 
 app.get('/stats', function(req, res) {
     res.render('pages/stats.ejs', {
@@ -201,14 +204,20 @@ app.get('/auth', function(req, res) {
     } else {
     console.log("unknown user");
     }
-    res.render(isAuthenticated ? "pages/index.ejs" : "pages/login.ejs", { root: __dirname });
+    res.render(isAuthenticated ? "pages/auth.ejs" : "pages/login.ejs", { root: __dirname });
+})
+
+app.get('/login', function(req, res) {
+    res.render('pages/login.ejs', {
+
+    })
 })
 
 app.post(
     "/login",
     passport.authenticate("local", {
-      successRedirect: "/",
-      failureRedirect: "/",
+      successRedirect: "/auth",
+      failureRedirect: "/auth",
     })
   );
 
