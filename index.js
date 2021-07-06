@@ -68,6 +68,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(favicon(path.join(__dirname, 'images', 'favicon.ico')));
+app.use(express.static('public'))
 
 const connection = mysql.createConnection({
     host: process.env.HOST,
@@ -193,6 +194,12 @@ app.get('/admins', function(req, res) {
 
 app.get('/mods', function(req, res) {
     res.render('pages/mods.ejs', {
+
+    });
+});
+
+app.get('/test', function(req, res) {
+    res.render('pages/test.ejs', {
 
     });
 });

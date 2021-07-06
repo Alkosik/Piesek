@@ -57,5 +57,50 @@ module.exports = {
 
 		})();
 
+		// console.log(`Attempting to download administration avatars...`);
+		// (async () => {
+		// 	var fs = require('fs'),
+		// 		request = require('request');
+
+		// 	var download = function (uri, filename, callback) {
+		// 		request.head(uri, function (err, res, body) {
+		// 			//console.log('content-type:', res.headers['content-type']);
+		// 			//console.log('content-length:', res.headers['content-length']);
+
+		// 			request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+		// 		});
+		// 	};
+
+		// 	const ownerId = "224487361394769920";
+		// 	const networkadminId = "284366115348414466";
+		// 	const mainadminId = "284989520087220226";
+		// 	const stadminId = "365848974093189120";
+
+
+		// 	const {
+		// 		ownerAvatarURL
+		// 	} = await client.users.fetch(ownerId)
+		// 		.catch(console.error);
+		// 	console.log(ownerAvatarURL);
+		// 	const {
+		// 		networkadminAvatarURL
+		// 	} = await client.users.fetch(networkadminId)
+		// 		.catch(console.error);
+		// 	const {
+		// 		mainadminAvatarURL
+		// 	} = await client.users.fetch(mainadminId)
+		// 		.catch(console.error);
+		// 	const {
+		// 		stadminAvatarURL
+		// 	} = await client.users.fetch(stadminId)
+		// 		.catch(console.error);
+
+
+		// 	console.log('Downloading Owner avatar...')
+		// 	download(ownerAvatarURL, 'owner.gif', function () {
+		// 		console.log('Owner Avatar Downloaded.');
+		// 	});
+		// })();
+
 	},
 };
