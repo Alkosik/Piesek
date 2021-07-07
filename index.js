@@ -181,8 +181,14 @@ app.get('/ranking', function(req, res) {
 })
 
 app.get('/stats', function(req, res) {
-    res.render('pages/stats.ejs', {
+    const guild = client.guilds.cache.get("510941195267080214");
+    var userCount = guild.memberCount;
+    var onlineCount = guild.members.cache.filter(m => m.presence.status === 'online').size
 
+
+    res.render('pages/stats.ejs', {
+        userCount: userCount,
+        onlineCount: onlineCount
     });
 });
 

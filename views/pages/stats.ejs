@@ -9,6 +9,19 @@
     <link rel="stylesheet" href="./assets/css/main.css" type="text/css">
 </head>
 <body>
-    <h1>Under construction</h1>
+    <script src="/socket.io/socket.io.js"></script>
+    <h1>Aktualna liczba członków</h1>
+    <h2 id="memCounter"><%= userCount %> </h2>
+
+    <script>
+        var socket = io();
+
+        socket.on('web_update', function (userCount) {
+            var memCount = document.getElementById('memCounter');
+            
+
+            memCount.textContent = userCount;
+        });
+    </script>
 </body>
 </html>
