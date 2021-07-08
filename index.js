@@ -1,21 +1,26 @@
-//#region vars
+// Initial
 const fs = require('fs');
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+var path = require('path');
+
+// Discord
 const Discord = require('discord.js');
-
-const {
-    prefix,
-    ownerId
-} = require('./config.json');
-
 const client = new Discord.Client({
     partials: ['MESSAGE', 'REACTION'],
+    ws: {
+        intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS']
+    }
 });
+const prefix = require('./config.json');
 
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 const player = fs.readdirSync('./player').filter(file => file.endsWith('.js'));
 
+// Web Server
 var express = require('express');
 var app = express();
 const session = require("express-session");
@@ -62,13 +67,25 @@ client.filters = client.config.filters;
 
 app.set('view engine', 'ejs');
 app.use('/assets', express.static('assets'))
-const sessionMiddleware = session({ secret: "gs", resave: false, saveUninitialized: false });
+const sessionMiddleware = session({
+    secret: "gs",
+    resave: false,
+    saveUninitialized: false
+});
 app.use(sessionMiddleware);
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(favicon(path.join(__dirname, 'images', 'favicon.ico')));
 app.use(express.static('public'))
+var DiscordStrategy = require('passport-discord').Strategy;
+
+var scopes = ['identify', 'email', 'guilds', 'guilds.join'];
+
+// const socketSever = require('./app/controllers/socketServer');
+// socketSever(io);
 
 const connection = mysql.createConnection({
     host: process.env.HOST,
@@ -88,15 +105,15 @@ const DUMMY_USER = {
 
 passport.use(
     new LocalStrategy((username, password, done) => {
-      if (username === "alkosik" && password === "dupa") {
-        console.log("authentication OK");
-        return done(null, DUMMY_USER);
-      } else {
-        console.log("wrong credentials");
-        return done(null, false);
-      }
+        if (username === "alkosik" && password === "dupa") {
+            console.log("authentication OK");
+            return done(null, DUMMY_USER);
+        } else {
+            console.log("wrong credentials");
+            return done(null, false);
+        }
     })
-  );
+);
 
 function generateXp() { //Generating EXP
     return Math.floor(Math.random() * (10 - 5 + 1)) + 5; // Amount of EXP
@@ -153,7 +170,7 @@ app.get('/', function (req, res) {
     res.render('pages/main.ejs')
 });
 
-app.get('/ranking', function(req, res) {
+app.get('/ranking', function (req, res) {
     connection.query(`SELECT username, points FROM acc_event ORDER BY points DESC LIMIT 5`, function (err, rows) {
         if (err) throw err;
 
@@ -180,47 +197,55 @@ app.get('/ranking', function(req, res) {
     })
 })
 
-app.get('/stats', function(req, res) {
+app.get('/stats', function (req, res) {
     const guild = client.guilds.cache.get("510941195267080214");
     var userCount = guild.memberCount;
-    var onlineCount = guild.members.cache.filter(m => m.presence.status === 'online').size
 
+    console.log('Członków: ' + userCount)
 
     res.render('pages/stats.ejs', {
         userCount: userCount,
-        onlineCount: onlineCount
+        //onlineCount: onlineCount
     });
 });
 
-app.get('/admins', function(req, res) {
+app.get('/admins', function (req, res) {
     res.render('pages/admins.ejs', {
 
     });
 });
 
-app.get('/mods', function(req, res) {
+app.get('/mods', function (req, res) {
     res.render('pages/mods.ejs', {
 
     });
 });
 
-app.get('/test', function(req, res) {
+app.get('/test', function (req, res) {
     res.render('pages/test.ejs', {
 
     });
 });
 
-app.get('/auth', function(req, res) {
+app.get('/chess', function (req, res) {
+    res.render('pages/chess/index.hbs', {
+        
+    });
+});
+
+app.get('/auth', function (req, res) {
     const isAuthenticated = !!req.user;
     if (isAuthenticated) {
-    console.log(`user is authenticated, session is ${req.session.id}`);
+        console.log(`user is authenticated, session is ${req.session.id}`);
     } else {
-    console.log("unknown user");
+        console.log("unknown user");
     }
-    res.render(isAuthenticated ? "pages/auth.ejs" : "pages/login.ejs", { root: __dirname });
+    res.render(isAuthenticated ? "pages/auth.ejs" : "pages/login.ejs", {
+        root: __dirname
+    });
 })
 
-app.get('/login', function(req, res) {
+app.get('/login', function (req, res) {
     res.render('pages/login.ejs', {
 
     })
@@ -229,45 +254,47 @@ app.get('/login', function(req, res) {
 app.post(
     "/login",
     passport.authenticate("local", {
-      successRedirect: "/auth",
-      failureRedirect: "/auth",
+        successRedirect: "/auth",
+        failureRedirect: "/auth",
     })
-  );
+);
 
-  app.post("/logout", (req, res) => {
+app.post("/logout", (req, res) => {
     console.log(`logout ${req.session.id}`);
     const socketId = req.session.socketId;
     if (socketId && io.of("/").sockets.get(socketId)) {
-      console.log(`forcefully closing socket ${socketId}`);
-      io.of("/").sockets.get(socketId).disconnect(true);
+        console.log(`forcefully closing socket ${socketId}`);
+        io.of("/").sockets.get(socketId).disconnect(true);
     }
     req.logout();
-    res.cookie("connect.sid", "", { expires: new Date() });
+    res.cookie("connect.sid", "", {
+        expires: new Date()
+    });
     res.redirect("/");
-  });
+});
 
-  passport.serializeUser((user, cb) => {
+passport.serializeUser((user, cb) => {
     console.log(`serializeUser ${user.id}`);
     cb(null, user.id);
-  });
-  
-  passport.deserializeUser((id, cb) => {
+});
+
+passport.deserializeUser((id, cb) => {
     console.log(`deserializeUser ${id}`);
     cb(null, DUMMY_USER);
-  });
+});
 
-  const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
 
 io.use(wrap(sessionMiddleware));
 io.use(wrap(passport.initialize()));
 io.use(wrap(passport.session()));
 
 io.use((socket, next) => {
-  if (socket.request.user) {
-    next();
-  } else {
-    next(new Error('unauthorized'))
-  }
+    if (socket.request.user) {
+        next();
+    } else {
+        next(new Error('unauthorized'))
+    }
 });
 
 io.on('connection', (socket) => {
@@ -284,12 +311,12 @@ io.on('connection', (socket) => {
 
     socket.on('whoami', (cb) => {
         cb(socket.request.user ? socket.request.user.username : '');
-      });
-    
-      const session = socket.request.session;
-      console.log(`saving sid ${socket.id} in session ${session.id}`);
-      session.socketId = socket.id;
-      session.save();
+    });
+
+    const session = socket.request.session;
+    console.log(`saving sid ${socket.id} in session ${session.id}`);
+    session.socketId = socket.id;
+    session.save();
 });
 
 server.listen(process.env.PORT, () => {

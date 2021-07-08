@@ -40,7 +40,7 @@ if (ie)
 
 if (ie||n6){
 	for (i = 0; i < n; i++)
-		document.write('<div id="dots'+i+'" style="position:absolute;top:0px;left:0px;width:'+i/2+'px;height:'+i/2+'px;background:#ff0000;font-size:'+i/2+'"></div>');
+		document.write('<div id="dots'+i+'" style="position:absolute;top:0px;left:0px;width:'+i/2+'px;height:'+i/2+'px;background:#ff0000;font-size:'+i/2+';"></div>');
 }
 
 if (ie)

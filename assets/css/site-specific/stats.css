@@ -1,0 +1,10 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.value {
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+}
