@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gang Słoni</title>
+
+    <link rel="stylesheet" href="./assets/css/main.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/dark.css" type="text/css">
+
+    <link rel="stylesheet" href="./assets/css/site-specific/dashboard.css" type="text/css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-div">
+        <p style="color: rgb(2, 226, 2);">Access granted</p>
+        <p>Socket ID: <span id="socketId"></span></p>
+        <p>Username: <span id="username"></span></p>
+        <form action="/logout" method="post">
+            <div class="link">
+                <input type="submit" value="Log out" />
+            </div>
+        </form>
+        
+        <form id="testform" action="/testme" method="post">
+            <div class="link">
+                <a class="button" onclick="document.getElementById('testform').submit()">Dupa</a>
+            </div>
+        </form>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+          const socket = io();
+          const socketIdSpan = document.getElementById("socketId");
+          const usernameSpan = document.getElementById("username");
+
+          socket.on('connect', () => {
+            socketIdSpan.innerText = socket.id;
+
+            socket.emit('whoami', (username) => {
+              usernameSpan.innerText = username;
+            });
+          });
+        </script>
+    </div>
+</body>
+</html>

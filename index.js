@@ -228,7 +228,7 @@ app.get('/test', function (req, res) {
 });
 
 app.get('/chess', function (req, res) {
-    res.render('pages/chess/index.hbs', {
+    res.render('chess/index.hbs', {
         
     });
 });
@@ -240,7 +240,7 @@ app.get('/auth', function (req, res) {
     } else {
         console.log("unknown user");
     }
-    res.render(isAuthenticated ? "pages/auth.ejs" : "pages/login.ejs", {
+    res.render(isAuthenticated ? "dashboard/main.ejs" : "pages/login.ejs", {
         root: __dirname
     });
 })
@@ -281,6 +281,11 @@ passport.serializeUser((user, cb) => {
 passport.deserializeUser((id, cb) => {
     console.log(`deserializeUser ${id}`);
     cb(null, DUMMY_USER);
+});
+
+app.post('/testme', (req, res) => {
+    console.log(client.user.tag);
+    client.channels.cache.get("747933354468573194").send(`Who wants to play chess? :D`);
 });
 
 const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);

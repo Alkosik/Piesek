@@ -8,13 +8,23 @@
 
     <link rel="stylesheet" href="../assets/css/main.css" type="text/css">
     <link rel="stylesheet" href="../assets/css/dark.css" type="text/css">
+    <link rel="stylesheet" href="../assets/css/chess/cm-chessboard.css" type="text/css">
 </head>
 <body>
-    <div class="bg-div" style="overflow:hidden;">
+    {{!-- style="overflow:hidden;" --}}
+    <div class="bg-div">
         <h1>The Gang Słoni Chess App development has been cancelled.</h1>
         <div class="link">
             <a href="/" class="button">Strona Główna</a>
         </div>
+
+        <div class="board" id="board1"></div>
     </div>
+    <script type="module">
+    import {Chessboard} from "../../chess/src/cm-chessboard/Chessboard.js"
+
+    new Chessboard(document.getElementById("board1"),
+            {position: "rn2k1r1/ppp1pp1p/3p2p1/5bn1/P7/2N2B2/1PPPPP2/2BNK1RR"})
+</script>
 </body>
 </html>
