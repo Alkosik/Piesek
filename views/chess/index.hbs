@@ -18,13 +18,10 @@
             <a href="/" class="button">Strona Główna</a>
         </div>
 
-        <div class="board" id="board1"></div>
+        <div class="board-container" align="center">
+            <div class="board" id="board"></div>
+        </div>
     </div>
-    <script type="module">
-    import {Chessboard} from "../../chess/src/cm-chessboard/Chessboard.js"
-
-    new Chessboard(document.getElementById("board1"),
-            {position: "rn2k1r1/ppp1pp1p/3p2p1/5bn1/P7/2N2B2/1PPPPP2/2BNK1RR"})
-</script>
+    <script type="module" src="../../chess/scripts/chessScript.js"></script>
 </body>
 </html>

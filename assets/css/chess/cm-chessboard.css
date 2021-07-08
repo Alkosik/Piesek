@@ -225,3 +225,9 @@
       fill: #9c9c9c; }
 
 /*# sourceMappingURL=cm-chessboard.css.map */
+
+.board-container {
+  margin: auto;
+  height: 75vh;
+  width: 75vh;
+}
