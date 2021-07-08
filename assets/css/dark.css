@@ -51,3 +51,9 @@
     width: 100%;
     text-align: center;
   }
+
+  .board-container {
+    margin: auto;
+    height: 75vh;
+    width: 75vh;
+  }
