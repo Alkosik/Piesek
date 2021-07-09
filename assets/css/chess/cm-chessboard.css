@@ -1,5 +1,6 @@
 .cm-chessboard .board.input-enabled .square {
-  cursor: pointer; }
+  cursor: url('../../images/cursor.png') 10 10, auto;
+}
 
 .cm-chessboard .markers .marker.markerFrame {
   stroke: black;
