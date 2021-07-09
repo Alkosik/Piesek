@@ -167,7 +167,13 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 });
 
 app.get('/', function (req, res) {
-    res.render('pages/main.ejs')
+    var ua = req.header('user-agent');
+    console.log(ua);
+    if(/mobile|iphone|ipod|android|blackberry|opera|mini|windows\sce|palm|smartphone|iemobile|ipad|android|android 3.0|xoom|sch-i800|playbook|tablet|kindle/i.test(ua)) {
+        res.render('pages/mobile.ejs');
+    } else {
+        res.render('pages/main.ejs')
+    }
 });
 
 app.get('/ranking', function (req, res) {
