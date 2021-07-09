@@ -239,6 +239,12 @@ app.get('/chess', function (req, res) {
     });
 });
 
+app.get('/mobile', function (req, res) {
+    res.render('pages/mobile.ejs', {
+        
+    });
+});
+
 app.get('/auth', function (req, res) {
     const isAuthenticated = !!req.user;
     if (isAuthenticated) {
