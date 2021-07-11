@@ -96,18 +96,24 @@
         </script>
     </div>
     <script>
+        if (window.matchMedia("(orientation: portrait)").matches) {
+			    console.log("portrait orientation");
+                document.getElementById('orientation-container').style.visibility='hidden';
+		    }
+		    if (window.matchMedia("(orientation: landscape)").matches) {
+			    console.log("landscape orientation");
+                document.getElementById('orientation-container').style.visibility='visible';
+		    }
         $(window).on("orientationchange", function( event ) {
             console.log("orientation changed");
-            if(window.innerHeight > window.innerWidth){
-                //portrait
-                console.log("portrait orientation");
-                document.getElementById('orientation-container').style.visibility='visible';
-            }
-            if(window.innerWidth > window.innerHeight){
-                //landscape
-                console.log("landscape orientation");
+            if (window.matchMedia("(orientation: portrait)").matches) {
+			    console.log("portrait orientation");
                 document.getElementById('orientation-container').style.visibility='hidden';
-            }
+		    }
+		    if (window.matchMedia("(orientation: landscape)").matches) {
+			    console.log("landscape orientation");
+                document.getElementById('orientation-container').style.visibility='visible';
+		    }
         });
         </script>
 </body>
