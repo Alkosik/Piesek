@@ -99,9 +99,12 @@
         // Bind an event to window.orientationchange that, when the device is turned,
         // gets the orientation and displays it to on screen.
         $(window).on("orientationchange", function( event ) {
+            console.log("orientation changed");
             if (window.orientation == 90) {
+                console.log("portrait orientation");
                 document.getElementById('orientation-container').style.visibility='hidden';
             } else {
+                console.log("landscape orientation");
                 document.getElementById('orientation-container').style.visibility='visible';
             }
         //   $( "#orientation" ).text( "This device is in " + event.orientation + " mode!" );
