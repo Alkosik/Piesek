@@ -133,7 +133,7 @@ li:hover {
 	height: 4px;
 	margin: 0 auto;
 	background: #fff;
-	transform: skew(5deg);
+	transform: skew(5deg) translateY(10px);
 	transition: all .275s;
 }
 
@@ -156,7 +156,7 @@ li:hover {
 
 /* Toggle State part */
 .is-open .burger {
-	transform: skew(5deg) translateY(-8px) rotate(-45deg);
+	transform: skew(5deg) translateY(-2px) rotate(-45deg);
 }
 
 .is-open .burger:before {
@@ -174,7 +174,7 @@ li:hover {
 	display: block;
 	font-size: .675rem;
 	letter-spacing: .05em;
-	margin-top: .5em;
+	margin-top: 1em;
 	text-transform: uppercase;
 	font-weight: 500;
 	text-align: center;
@@ -210,6 +210,7 @@ body {
 }
 
 .logo {
+    transform: translateY(25vh);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -220,4 +221,27 @@ body {
     width: 240px;
     z-index: 50;
     opacity: 100;
+}
+
+.orientation-alert {
+    background: rgb(12, 12, 12, .9);
+    height: 100%;
+    width: 100%;
+    visibility: hidden;
+    position: absolute;
+    z-index: 1500 !important;
+    overflow: hidden;
+}
+
+.orientation-alert img {
+    display: block;
+    margin-top: 15%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 80px;
+    width: 80px;
+}
+
+.orientation-alert h1 {
+    text-align: center;
 }

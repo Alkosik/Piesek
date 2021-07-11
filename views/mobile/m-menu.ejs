@@ -12,9 +12,17 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 </head>
 <body>
     <div class="bg-div">
+        <div class="orientation-alert" id="orientation-container">
+            <img src="./images/orientation.png">
+            <h1>We don't support landscape orientation</h1>
+        </div>
         <div class="device">
             <div class="container">
                 <button id="burger" class="open-main-nav">
@@ -87,5 +95,20 @@
         });
         </script>
     </div>
+    <script>
+        // Bind an event to window.orientationchange that, when the device is turned,
+        // gets the orientation and displays it to on screen.
+        $(window).on("orientationchange", function( event ) {
+            if (window.orientation == 90) {
+                document.getElementById('orientation-container').style.visibility='hidden';
+            } else {
+                document.getElementById('orientation-container').style.visibility='visible';
+            }
+        //   $( "#orientation" ).text( "This device is in " + event.orientation + " mode!" );
+        });
+         
+        // // You can also manually force this event to fire.
+        // $( window ).orientationchange();
+        </script>
 </body>
 </html>
