@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 var path = require('path');
+const getJSON = require('get-json')
 
 // Discord
 const Discord = require('discord.js');
@@ -168,9 +169,10 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 
 app.get('/', function (req, res) {
     var ua = req.header('user-agent');
-    console.log(ua);
     if(/mobile|iphone|ipod|android|blackberry|opera|mini|windows\sce|palm|smartphone|iemobile|ipad|android|android 3.0|xoom|sch-i800|playbook|tablet|kindle/i.test(ua)) {
-        res.render('pages/mobile.ejs');
+        console.log("Mobile device detected. Redirecting to mobile.ejs")
+        console.log(ua);
+        res.render('mobile/m-menu.ejs');
     } else {
         res.render('pages/main.ejs')
     }
@@ -240,7 +242,7 @@ app.get('/chess', function (req, res) {
 });
 
 app.get('/mobile', function (req, res) {
-    res.render('pages/mobile.ejs', {
+    res.render('mobile/m-menu.ejs', {
         
     });
 });
@@ -629,3 +631,16 @@ var BanHealth = schedule.scheduleJob('0 0 1 * *', function () {
 
     })();
 });
+
+// var StreamCheck = schedule.scheduleJob('* * * * *', function () {
+//     (async () => {
+//         console.log('sprawdzam czy jes');
+//         getJSON("https://api.twitch.tv/kraken/streams/grigori_rzannikov", function(err, res) {
+//             if (res.stream_type == "live") {
+//                 console.log('jest strim')
+//                 const guild = client.guilds.cache.get("510941195267080214");
+//                 client.channels.cache.get("747933354468573194").send(`Who wants to play chess? :D`);
+//             }
+//         });
+//     })();
+// });

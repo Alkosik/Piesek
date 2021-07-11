@@ -1,0 +1,29 @@
+{
+    "content": "{{ChannelName}} odpalił strima na Twitchu",
+    "embeds": [{
+      "title": "{{ChannelUrl}}",
+      "url": "{{ChannelUrl}}",
+      "color": 6570404,
+      "footer": {
+        "text": "{{CreatedAt}}"
+      },
+      "image": {
+        "url": "{{StreamPreview}}"
+      },
+      "author": {
+        "name": "{{ChannelName}} ma tera strima"
+      },
+      "fields": [
+        {
+          "name": "Playing",
+          "value": "{{Game}}",
+          "inline": true
+        },
+        {
+          "name": "Zaczął o (streamer timezone)",
+          "value": "{{CreatedAt}}",
+          "inline": true
+        }
+      ]
+    }]
+  }
