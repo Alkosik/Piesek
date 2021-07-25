@@ -49,7 +49,7 @@ module.exports = {
 			new WOKCommands(client, {
 				commandsDir: 'commands',
 				testServers: [guildId],
-				showWarns: false,
+				showWarns: true,
 				del: 5,
 			}).setDefaultPrefix('gs')
 

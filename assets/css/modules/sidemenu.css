@@ -90,6 +90,9 @@
 .main-nav li:nth-child(8) a {
 	transition: all 275ms 525ms
 }
+.main-nav li:nth-child(9) a {
+	transition: all 275ms 575ms
+}
 
 li:hover {
     transition: all 0.3s;
@@ -208,17 +211,4 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-.logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.logo img {
-    position: relative;
-    height: 240px;
-    width: 240px;
-    z-index: 50;
-    opacity: 100;
 }

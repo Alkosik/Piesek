@@ -1,0 +1,60 @@
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo img {
+    position: relative;
+    height: 240px;
+    width: 240px;
+    z-index: 50;
+    opacity: 100;
+}
+
+.t1 {
+    color: gold;
+}
+
+.t2 {
+    color: silver;
+}
+
+.t3 {
+    color: #cd7f32;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#lb {
+    /* display: inline-block; */
+    width: 370px;
+    height: 200px;
+    padding-left: 5px;
+    padding-right: 5px;
+    vertical-align: top;
+    /*border: 5px solid red;*/
+}
+
+#lb h2 {
+    text-align: center;
+    text-shadow: 1px 1px black;
+    transform: translateY(-400%);
+}
+
+.leaderboard1 {
+    margin-left: 29%;
+}
+
+.leaderboard2 {
+    margin-right: 25%;
+}
+
+.lbtitle {
+    color: white;
+    text-align: center;
+    transform: translateY(-100px);
+    font-size: 68px;
+}

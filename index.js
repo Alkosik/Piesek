@@ -10,9 +10,9 @@ const getJSON = require('get-json')
 const Discord = require('discord.js');
 const client = new Discord.Client({
     partials: ['MESSAGE', 'REACTION'],
-    ws: {
-        intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS']
-    }
+    // ws: {
+    //     intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS', 'GUILD_MESSAGES']
+    // }
 });
 const prefix = require('./config.json');
 
@@ -345,6 +345,7 @@ server.listen(process.env.PORT, () => {
 //#region client.on('message)
 client.on('message', message => {
     if (!message.content.startsWith(prefix) && !message.author.bot) {
+        console.log('Mew message sent.');
         connection.query(`SELECT * FROM account WHERE id = ${message.author.id}`, function (err, rows) {
             if (err) throw err;
 

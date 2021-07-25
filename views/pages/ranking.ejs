@@ -13,15 +13,56 @@
     <link rel="stylesheet" href="./assets/css/main.css" type="text/css">
     <!-- <link rel="stylesheet" href="./assets/css/chat.css" type="text/css"> -->
     <link rel="stylesheet" href="./assets/css/dark.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/site-specific/ranking.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/modules/sidemenu.css" type="text/css">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <h1 class="title">Gang Słoni</h1>
-    <p class="subtitle">ranking</h1>
-
+    <div class="device">
+        <div class="container">
+            <button id="burger" class="open-main-nav">
+                <span class="burger"></span>
+                <span class="burger-text">Menu</span>
+            </button>
+            <nav class="main-nav" id="main-nav">
+                <ul>
+                    <li>
+                        <a href="/">Strona Główna</a>
+                    </li>
+                    <li>
+                        <a href="/ranking">Ranking</a>
+                    </li>
+                    <li>
+                        <a href="/admins">Administracja</a>
+                    </li>
+                    <li>
+                        <a href="/stats">Statystyki</a>
+                    </li>
+                    <li>
+                        <a href="https://discord.gg/7XcYkDU" target="_blank">Discord</a>
+                    </li>
+                    <li>
+                        <a href="/auth">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/mods">Mody</a>
+                    </li>
+                    <li>
+                        <a href="/chess">Szachy</a>
+                    </li>
+                    <li>
+                        <a href="https://www.twitch.tv/grigori_rzannikov" target="_blank">Gredży</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    <div class="logo">
+        <img src="./images/logo.png">
+    </div>
+    <p class="subtitle">ranking</p>
         <div id="wrapper"></div>
         <ul class="leaderboard1" id="lb">
             <h1 class="lbtitle">Level</h1>
@@ -40,6 +81,7 @@
         <div class="link">
             <a href="/" class="button">Strona Główna</a>
         </div>
+</div>
 
         <script src="/socket.io/socket.io.js"></script>
         <script>
@@ -92,6 +134,36 @@
                 leaderboard2.appendChild(acc2);
                 leaderboard2.appendChild(acc3);
             });
+        </script>
+        <script>
+            let burger = document.getElementById('burger'),
+             nav    = document.getElementById('main-nav'),
+             slowmo = document.getElementById('slowmo');
+        
+        burger.addEventListener('click', function(e){
+            this.classList.toggle('is-open');
+            nav.classList.toggle('is-open');
+        });
+        
+        slowmo.addEventListener('click', function(e){
+            this.classList.toggle('is-slowmo');
+        });
+        
+        /* Onload demo - dirty timeout */
+        let clickEvent = new Event('click');
+        
+        window.addEventListener('load', function(e) {
+            slowmo.dispatchEvent(clickEvent);
+            burger.dispatchEvent(clickEvent);
+            
+            setTimeout(function(){
+                burger.dispatchEvent(clickEvent);
+                
+                setTimeout(function(){
+                    slowmo.dispatchEvent(clickEvent);
+                }, 3500);
+            }, 5500);
+        });
         </script>
 </body>
 
