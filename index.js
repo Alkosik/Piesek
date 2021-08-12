@@ -2,6 +2,7 @@
 const fs = require('fs');
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
+    console.log(`Current environment: ${process.env.NODE_ENV}`)
 }
 var path = require('path');
 const getJSON = require('get-json')
@@ -36,25 +37,18 @@ const {
     Server
 } = require("socket.io");
 const io = new Server(server);
-
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
 //const config = require("./")
 const token = process.env.TOKEN;
-const utf8 = require('utf8');
+//const utf8 = require('utf8');
 const mysql = require('mysql');
-const cooldowns = new Discord.Collection();
+//const cooldowns = new Discord.Collection();
 const talkedRecently = new Set();
-const {
-    connect
-} = require('http2');
+// const {
+//     connect
+// } = require('http2');
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
-const Canvas = require('canvas');
+//const Canvas = require('canvas');
 var schedule = require('node-schedule');
-const {
-    kill
-} = require('process');
 
 //#region Player vars
 const {
@@ -346,7 +340,6 @@ server.listen(process.env.PORT, () => {
 //#region client.on('message)
 client.on('message', message => {
     if (!message.content.startsWith(prefix) && !message.author.bot) {
-        console.log('Mew message sent.');
         connection.query(`SELECT * FROM account WHERE id = ${message.author.id}`, function (err, rows) {
             if (err) throw err;
 
@@ -637,7 +630,7 @@ var BanHealth = schedule.scheduleJob('0 0 1 * *', function () {
 // var StreamCheck = schedule.scheduleJob('* * * * *', function () {
 //     (async () => {
 //         console.log('sprawdzam czy jes');
-//         getJSON("https://api.twitch.tv/kraken/streams/grigori_rzannikov", function(err, res) {
+//         getJSON("https://api.twitch.tv/helix/streams?user_id=mychannel", function(err, res) {
 //             if (res.stream_type == "live") {
 //                 console.log('jest strim')
 //                 const guild = client.guilds.cache.get("510941195267080214");
