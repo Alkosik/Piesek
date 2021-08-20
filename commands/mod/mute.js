@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js')
+
 module.exports = {
     category: 'Moderation',
     name: 'mute',
