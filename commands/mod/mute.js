@@ -61,7 +61,7 @@ module.exports = {
 
         if (mutee.roles.cache.has(muterole.id)) return message.channel.send("**Ta osoba jest już zmutowana**")
 
-        db.set(`muteeid_${message.guild.id}_${mutee.id}`, userRoles)
+        //db.set(`muteeid_${message.guild.id}_${mutee.id}`, userRoles)
         try {
             mutee.roles.set([muterole.id]).then(() => {
                 mutee.send(`**Elo, Zostałeś zmutowany w ${message.guild.name} za - ${reason || "Brak powodu"}`).catch(() => null)

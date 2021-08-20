@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
     console.log(`Current environment: ${process.env.NODE_ENV}`)
 }
 var path = require('path');
-const getJSON = require('get-json')
+//const getJSON = require('get-json')
 
 // Discord
 const Discord = require('discord.js');
@@ -78,7 +78,7 @@ app.use(favicon(path.join(__dirname, 'images', 'favicon.ico')));
 app.use(express.static('public'))
 var DiscordStrategy = require('passport-discord').Strategy;
 
-var scopes = ['identify', 'email', 'guilds', 'guilds.join'];
+//var scopes = ['identify', 'email', 'guilds', 'guilds.join'];
 
 // const socketSever = require('./app/controllers/socketServer');
 // socketSever(io);
