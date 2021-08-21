@@ -603,7 +603,7 @@ var JanusChamp = schedule.scheduleJob('1 1 * * *', function () {
     (async () => {
 
         const ayy = client.emojis.cache.find(emoji => emoji.name === "JanusChamp");
-        client.channels.cache.get('510941195929649153').send(`<@430140838345965595>, albercik ${ayy}`);
+        client.channels.cache.get('510941195929649153').send(`<@430140838345965595>, nienawidze cie ${ayy}`);
 
 
     })();
