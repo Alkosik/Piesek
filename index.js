@@ -380,23 +380,23 @@ client.on('message', message => {
                     })();
 
                     if (rows[0].level >= 100) {
-                        const role = member.guild.roles.cache.find(role => role.name === "Elitarne Słonie");
-                        member.roles.add(role);
+                        const role = message.member.guild.roles.cache.find(role => role.name === "Elitarne Słonie");
+                        message.member.roles.add(role);
                     } else if (rows[0].level >= 50) {
-                        const role = member.guild.roles.cache.find(role => role.name === "Best Słonie Ever <3");
-                        member.roles.add(role);
+                        const role = message.member.guild.roles.cache.find(role => role.name === "Best Słonie Ever <3");
+                        message.member.roles.add(role);
                     } else if (rows[0].level >= 30) {
-                        const role = member.guild.roles.cache.find(role => role.name === "Zaawansowane Słonie");
-                        member.roles.add(role);
+                        const role = message.member.guild.roles.cache.find(role => role.name === "Zaawansowane Słonie");
+                        message.member.roles.add(role);
                     } else if (rows[0].level >= 15) {
-                        const role = member.guild.roles.cache.find(role => role.name === "Fajne Słonie");
-                        member.roles.add(role);
+                        const role = message.member.guild.roles.cache.find(role => role.name === "Fajne Słonie");
+                        message.member.roles.add(role);
                     } else if (rows[0].level >= 5) {
-                        const role = member.guild.roles.cache.find(role => role.name === "Dobre Słonie");
-                        member.roles.add(role);
+                        const role = message.member.guild.roles.cache.find(role => role.name === "Dobre Słonie");
+                        message.member.roles.add(role);
                     } else if (rows[0].level >= 1) {
-                        const role = member.guild.roles.cache.find(role => role.name === "Słoniki");
-                        member.roles.add(role);
+                        const role = message.member.guild.roles.cache.find(role => role.name === "Słoniki");
+                        message.member.roles.add(role);
                     }
                 }
             }
@@ -437,7 +437,7 @@ client.on('message', message => {
                                 console.log('Connected user detected.');
                             }
                             if (message.member.roles.cache.find(r => r.name === "Dusiciele")) {
-                                updatedPoints += 5;
+                   message.             updatedPoints += 5;
                                 console.log("Points booster role detected.")
                             }
 
@@ -599,11 +599,20 @@ var Erratas = schedule.scheduleJob('0 0 12 * *', function () {
     })();
 });
 
-var JanusChamp = schedule.scheduleJob('1 1 * * *', function () {
+var JanusChamp = schedule.scheduleJob('* * * * *', function () {
     (async () => {
+        let main_channel_id = '510941195929649153';
+        let test_channel_id = '879456954232209508';
 
-        const ayy = client.emojis.cache.find(emoji => emoji.name === "JanusChamp");
-        client.channels.cache.get('510941195929649153').send(`<@430140838345965595>, nienawidze cie ${ayy}`);
+        const janus = client.emojis.cache.find(emoji => emoji.name === "JanusChamp");
+        const pepo_love = client.emojis.cache.find(emoji => emoji.name === "PepoLove");
+
+        let mood = Math.random() * (10 - 1) + 1;
+        if(mood >= 5) {
+            client.channels.cache.get(test_channel_id).send(`<@430140838345965595>, kocham cie ${pepo_love}`);
+        } else {
+            client.channels.cache.get(test_channel_id).send(`<@430140838345965595>, nienawidze cie ${janus}`);
+        }
 
 
     })();
@@ -621,6 +630,7 @@ var BanHealth = schedule.scheduleJob('0 0 1 * *', function () {
                 sql = `UPDATE m_bans SET bans = 1 WHERE id = '549223740228108288'`
             }
             console.log(rows)
+            client.channels.cache.get('510941195929649153').send(`Liczba banów została zresetowana.`)
         })
         connection.query(sql);
 
