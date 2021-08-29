@@ -599,7 +599,7 @@ var Erratas = schedule.scheduleJob('0 0 12 * *', function () {
     })();
 });
 
-var JanusChamp = schedule.scheduleJob('* * * * *', function () {
+var JanusChamp = schedule.scheduleJob('1 1 * * *', function () {
     (async () => {
         let main_channel_id = '510941195929649153';
         let test_channel_id = '879456954232209508';
@@ -609,9 +609,9 @@ var JanusChamp = schedule.scheduleJob('* * * * *', function () {
 
         let mood = Math.random() * (10 - 1) + 1;
         if(mood >= 5) {
-            client.channels.cache.get(test_channel_id).send(`<@430140838345965595>, kocham cie ${pepo_love}`);
+            client.channels.cache.get(main_channel_id).send(`<@430140838345965595>, kocham cie ${pepo_love}`);
         } else {
-            client.channels.cache.get(test_channel_id).send(`<@430140838345965595>, nienawidze cie ${janus}`);
+            client.channels.cache.get(main_channel_id).send(`<@430140838345965595>, nienawidze cie ${janus}`);
         }
 
 
