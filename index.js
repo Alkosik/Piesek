@@ -5,15 +5,11 @@ if (process.env.NODE_ENV !== 'production') {
     console.log(`Current environment: ${process.env.NODE_ENV}`)
 }
 var path = require('path');
-//const getJSON = require('get-json')
 
 // Discord
 const Discord = require('discord.js');
 const client = new Discord.Client({
     partials: ['MESSAGE', 'REACTION'],
-    // ws: {
-    //     intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS', 'GUILD_MESSAGES']
-    // }
 });
 const prefix = require('./config.json');
 
@@ -37,17 +33,11 @@ const {
     Server
 } = require("socket.io");
 const io = new Server(server);
-//const config = require("./")
 const token = process.env.TOKEN;
-//const utf8 = require('utf8');
+const test_channel_id = '879456954232209508';
 const mysql = require('mysql');
-//const cooldowns = new Discord.Collection();
 const talkedRecently = new Set();
-// const {
-//     connect
-// } = require('http2');
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
-//const Canvas = require('canvas');
 var schedule = require('node-schedule');
 
 //#region Player vars
@@ -294,7 +284,7 @@ passport.deserializeUser((id, cb) => {
 
 app.post('/testme', (req, res) => {
     console.log(client.user.tag);
-    client.channels.cache.get("747933354468573194").send(`Who wants to play chess? :D`);
+    client.channels.cache.get(test_channel_id).send(`API Test initiated.`);
 });
 
 const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
@@ -469,6 +459,8 @@ client.on('message', message => {
 
                             connection.query(sql, function (error) {
                                 if (error) throw error;
+                                client.channels.cache.get(test_channel_id).send(`**A database error detected:**`);
+                                client.channels.cache.get(test_channel_id).send(error);
                             });
 
                             // Adds the user to the cooldown set
@@ -511,6 +503,8 @@ client.on('message', message => {
         } catch (error) {
             console.error(error);
             message.reply('Egzekucja komendy zakonczyla sie niepowodzeniem!');
+            client.channels.cache.get(test_channel_id).send(`**A command execution error detected:**`);
+            client.channels.cache.get(test_channel_id).send(error);
         }
         (async () => {
             await snooze(3000);
@@ -518,6 +512,8 @@ client.on('message', message => {
                 // Only log the error if it is not an Unknown Message error
                 if (error.code !== 10008) {
                     console.error('Failed to delete the message:', error);
+                    client.channels.cache.get(test_channel_id).send(`**A message removal error detected:**`);
+                    client.channels.cache.get(test_channel_id).send(error);
                 }
             });
         })();
@@ -623,7 +619,6 @@ var Erratas = schedule.scheduleJob('0 0 1 1 *', function () {
 var JanusChamp = schedule.scheduleJob('1 1 * * *', function () {
     (async () => {
         let main_channel_id = '510941195929649153';
-        let test_channel_id = '879456954232209508';
 
         const janus = client.emojis.cache.find(emoji => emoji.name === "JanusChamp");
         const pepo_love = client.emojis.cache.find(emoji => emoji.name === "PepoLove");
