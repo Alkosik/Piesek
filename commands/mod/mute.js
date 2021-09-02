@@ -29,9 +29,9 @@ module.exports = {
             .filter(r => r.id !== message.guild.id)
             .map(r => r.id)
 
-        let muterole;
+        //let muterole;
         //let dbmute = await db.fetch(`muterole_${message.guild.id}`);
-        let muteerole = message.guild.roles.cache.find(r => r.name === "Muted")
+        let muterole = message.guild.roles.cache.find(r => r.name === "Muted")
 
         // if (!message.guild.roles.cache.has(dbmute)) {
         //     muterole = muteerole
@@ -61,8 +61,13 @@ module.exports = {
             }
         };
 
-        if (mutee.roles.cache.has(muterole.id)) return message.channel.send("**Ta osoba jest już zmutowana**")
-
+        if (mutee.roles.cache.has(muterole.id)) {
+            mutee.roles.remove(muterole.id)
+            // if(userRoles) {
+            //     mutee.roles.set([userRoles]);
+            // }
+            return message.channel.send("**Ta osoba została odmutowana.**")
+        }
         //db.set(`muteeid_${message.guild.id}_${mutee.id}`, userRoles)
         try {
             mutee.roles.set([muterole.id]).then(() => {

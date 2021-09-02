@@ -164,7 +164,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 
 app.get('/', function (req, res) {
     var ua = req.header('user-agent');
-    if(/mobile|iphone|ipod|android|blackberry|opera|mini|windows\sce|palm|smartphone|iemobile|ipad|android|android 3.0|xoom|sch-i800|playbook|tablet|kindle/i.test(ua)) {
+    if (/mobile|iphone|ipod|android|blackberry|opera|mini|windows\sce|palm|smartphone|iemobile|ipad|android|android 3.0|xoom|sch-i800|playbook|tablet|kindle/i.test(ua)) {
         console.log("Mobile device detected. Redirecting to mobile.ejs")
         console.log(ua);
         res.render('mobile/m-menu.ejs');
@@ -232,13 +232,13 @@ app.get('/test', function (req, res) {
 
 app.get('/chess', function (req, res) {
     res.render('chess/index.hbs', {
-        
+
     });
 });
 
 app.get('/mobile', function (req, res) {
     res.render('mobile/m-menu.ejs', {
-        
+
     });
 });
 
@@ -339,6 +339,27 @@ server.listen(process.env.PORT, () => {
 
 //#region client.on('message)
 client.on('message', message => {
+    //#region Link detection
+    (async () => {
+        if (message.content.includes('discord.gg/' || 'discordapp.com/invite/')) {
+            const warnmsg = new Discord.MessageEmbed()
+                .setThumbnail('https://i.ibb.co/rk0Z6Mb/Grupfdgggdrszga-1.png')
+                .setTitle(`Link usunięty.`)
+                .setDescription(`Regulamin Art. 4 §6`)
+                .setColor('RED');
+            message.delete() //delete the message
+                .then(sentwarnmsg = await message.channel.send(warnmsg))
+                await snooze(5000);
+                sentwarnmsg.delete().catch(error => {
+                    // Only log the error if it is not an Unknown Message error
+                    if (error.code !== 10008) {
+                        console.error('Failed to delete the message:', error);
+                    }
+                });
+        }
+    })();
+    //#endregion
+
     if (!message.content.startsWith(prefix) && !message.author.bot) {
         connection.query(`SELECT * FROM account WHERE id = ${message.author.id}`, function (err, rows) {
             if (err) throw err;
@@ -437,7 +458,7 @@ client.on('message', message => {
                                 console.log('Connected user detected.');
                             }
                             if (message.member.roles.cache.find(r => r.name === "Dusiciele")) {
-                   message.             updatedPoints += 5;
+                                message.updatedPoints += 5;
                                 console.log("Points booster role detected.")
                             }
 
@@ -589,7 +610,7 @@ var main_event = schedule.scheduleJob('0 12 1 * *', function () {
     })();
 });
 
-var Erratas = schedule.scheduleJob('0 0 12 * *', function () {
+var Erratas = schedule.scheduleJob('0 0 1 1 *', function () {
     (async () => {
 
 
@@ -608,13 +629,11 @@ var JanusChamp = schedule.scheduleJob('1 1 * * *', function () {
         const pepo_love = client.emojis.cache.find(emoji => emoji.name === "PepoLove");
 
         let mood = Math.random() * (10 - 1) + 1;
-        if(mood >= 5) {
+        if (mood >= 5) {
             client.channels.cache.get(main_channel_id).send(`<@430140838345965595>, kocham cie ${pepo_love}`);
         } else {
             client.channels.cache.get(main_channel_id).send(`<@430140838345965595>, nienawidze cie ${janus}`);
         }
-
-
     })();
 });
 
