@@ -67,6 +67,9 @@ app.use(passport.session());
 app.use(favicon(path.join(__dirname, 'images', 'favicon.ico')));
 app.use(express.static('public'))
 var DiscordStrategy = require('passport-discord').Strategy;
+const {
+    stringify
+} = require('querystring');
 
 //var scopes = ['identify', 'email', 'guilds', 'guilds.join'];
 
@@ -339,20 +342,24 @@ client.on('message', message => {
                 .setColor('RED');
             message.delete() //delete the message
                 .then(sentwarnmsg = await message.channel.send(warnmsg))
-                await snooze(5000);
-                sentwarnmsg.delete().catch(error => {
-                    // Only log the error if it is not an Unknown Message error
-                    if (error.code !== 10008) {
-                        console.error('Failed to delete the message:', error);
-                    }
-                });
+            await snooze(5000);
+            sentwarnmsg.delete().catch(error => {
+                // Only log the error if it is not an Unknown Message error
+                if (error.code !== 10008) {
+                    console.error('Failed to delete the message:', error);
+                }
+            });
         }
     })();
     //#endregion
 
     if (!message.content.startsWith(prefix) && !message.author.bot) {
         connection.query(`SELECT * FROM account WHERE id = ${message.author.id}`, function (err, rows) {
-            if (err) throw err;
+            if (err) {
+                client.channels.cache.get(test_channel_id).send(`**A database error detected during initialization:**`);
+                client.channels.cache.get(test_channel_id).send(stringify(err));
+                throw err;
+            }
 
             let sql;
             let originalXp;
@@ -413,13 +420,21 @@ client.on('message', message => {
             }
 
             if (message.author.id != client.user.id) {
-                connection.query(sql, function (error, results, fields) {
-                    if (error) throw error;
+                connection.query(sql, function (err) {
+                    if (err) {
+                        client.channels.cache.get(test_channel_id).send(`**A database error detected during initialization:**`);
+                        client.channels.cache.get(test_channel_id).send(stringify(err));
+                        throw err;
+                    }
                 });
             }
 
             connection.query(`SELECT * FROM acc_event WHERE id = ${message.author.id}`, function (err, rows) {
-                if (err) throw err;
+                if (err) {
+                    client.channels.cache.get(test_channel_id).send(`**A database error detected during initialization:**`);
+                    client.channels.cache.get(test_channel_id).send(stringify(err));
+                    throw err;
+                }
 
                 if (rows.length >= 1) {
                     (async () => {
@@ -438,14 +453,14 @@ client.on('message', message => {
                             const conn_member = Guild.members.cache.get(message.author.id);
 
                             if (message.content.length <= 2) {
-                                return;
                                 updatedPoints = originalPoints;
+                                return;
                             } else if (message.content.length >= 60) {
                                 return;
                             }
                             if (conn_member.voice.channel) {
                                 updatedPoints += 1;
-                                console.log('Connected user detected.');
+                                console.log('Voice connected user detected.');
                             }
                             if (message.member.roles.cache.find(r => r.name === "Dusiciele")) {
                                 message.updatedPoints += 5;
@@ -457,10 +472,12 @@ client.on('message', message => {
                             sql = `UPDATE acc_event SET points = ${updatedPoints} WHERE id = '${message.author.id}'`;
                             console.log(`Adding ${loggedPoints} to ${message.author.username}`);
 
-                            connection.query(sql, function (error) {
-                                if (error) throw error;
-                                client.channels.cache.get(test_channel_id).send(`**A database error detected:**`);
-                                client.channels.cache.get(test_channel_id).send(error);
+                            connection.query(sql, function (err) {
+                                if (err) {
+                                    client.channels.cache.get(test_channel_id).send(`**A database error detected.**`);
+                                    client.channels.cache.get(test_channel_id).send(stringify(err));
+                                    throw err;
+                                }
                             });
 
                             // Adds the user to the cooldown set
