@@ -71,11 +71,6 @@ const {
     stringify
 } = require('querystring');
 
-//var scopes = ['identify', 'email', 'guilds', 'guilds.join'];
-
-// const socketSever = require('./app/controllers/socketServer');
-// socketSever(io);
-
 const connection = mysql.createConnection({
     host: process.env.HOST,
     user: process.env.USER,
@@ -196,12 +191,14 @@ app.get('/ranking', function (req, res) {
 app.get('/stats', function (req, res) {
     const guild = client.guilds.cache.get("510941195267080214");
     var userCount = guild.memberCount;
+    var onlineCount = guild.members.cache
+    .filter(m => m.presence.status === 'online').size;
 
     console.log('Członków: ' + userCount)
 
     res.render('pages/stats.ejs', {
         userCount: userCount,
-        //onlineCount: onlineCount
+        onlineCount: onlineCount
     });
 });
 
@@ -668,15 +665,3 @@ var BanHealth = schedule.scheduleJob('0 0 1 * *', function () {
     })();
 });
 
-// var StreamCheck = schedule.scheduleJob('* * * * *', function () {
-//     (async () => {
-//         console.log('sprawdzam czy jes');
-//         getJSON("https://api.twitch.tv/helix/streams?user_id=mychannel", function(err, res) {
-//             if (res.stream_type == "live") {
-//                 console.log('jest strim')
-//                 const guild = client.guilds.cache.get("510941195267080214");
-//                 client.channels.cache.get("747933354468573194").send(`Who wants to play chess? :D`);
-//             }
-//         });
-//     })();
-// });

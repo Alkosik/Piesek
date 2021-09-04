@@ -1,4 +1,5 @@
-const WOKCommands = require('wokcommands')
+const WOKCommands = require('wokcommands');
+const path = require('path');
 
 module.exports = {
 	name: 'ready',
@@ -47,7 +48,7 @@ module.exports = {
 			console.log(commands)
 
 			new WOKCommands(client, {
-				commandsDir: 'commands',
+				commandsDir: path.join(__dirname, '../commands'),
 				testServers: [guildId],
 				showWarns: true,
 				del: 5,

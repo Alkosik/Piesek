@@ -20,8 +20,8 @@
                 <h2 id="memCounter" class="value"><%= userCount %> </h2>
             </div>
             <div>
-                <h1>Aktualna liczba <br>członków</h1>
-                <h2 id="onlineMemCounter" class="value"><%= //onlineCount %> </h2>
+                <h1>Aktualna liczba <br>członków online</h1>
+                <h2 id="onlineMemCounter" class="value"><%= onlineCount %> </h2>
             </div>
             <div>
                 <h1>Aktualna liczba <br>członków</h1>
@@ -37,10 +37,12 @@
 
         socket.on('web_update', function (userCount, onlineCount) {
             var memCount = document.getElementById('memCounter');
+            var liveCount = document.getElementById('onlineMemCounter')
             //var onlineMemCount = document.getElementById('onlineMemCounter');
             
 
             memCount.textContent = userCount;
+            liveCount.textContent = onlineCount;
             //onlineMemCount.textContent = onlineCount;
         });
     </script>
