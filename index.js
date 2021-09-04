@@ -9,7 +9,7 @@ var path = require('path');
 // Discord
 const Discord = require('discord.js');
 const myIntents = new Discord.Intents();
-myIntents.add(Discord.Intents.FLAGS.GUILD_PRESENCES, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILD_MESSAGES);
+myIntents.add(Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS);
 const client = new Discord.Client({
     partials: ['MESSAGE', 'REACTION'],
     intents: myIntents
@@ -329,7 +329,7 @@ io.on('connection', (socket) => {
     session.save();
 });
 
-server.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, '127.0.0.1', () => {
     console.log('Server listening on port: ' + process.env.PORT);
 });
 
