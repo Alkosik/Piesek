@@ -2,7 +2,22 @@ module.exports = {
 	category: 'Utility',
 	name: 'date',
 	description: 'tst!',
-	callback: ({ client, message }) => {
-		message.channel.reply(`${message.guild.createdAt.toDateString()}`);
+	slash: 'both',
+	callback: ({
+		message,
+		interaction
+	}) => {
+		var reply = message.guild.createdAt.toDateString();
+
+		if (message) {
+			message.reply({
+				content: reply
+			})
+			return
+		}
+
+		interaction.reply({
+			content: reply
+		})
 	},
 };

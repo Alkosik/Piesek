@@ -11,7 +11,8 @@ module.exports = {
 			const soltysEmbed = new Discord.MessageEmbed()
                 .setTitle('Ale cipa')
 				.setImage('https://i.imgur.com/qs17Hey.jpg')
-			message.channel.send(soltysEmbed);
+			message.channel.send({ embeds: [soltysEmbed] });
 		})();
+		return
 	},
 };

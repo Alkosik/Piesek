@@ -49,7 +49,8 @@ module.exports = {
 
 			new WOKCommands(client, {
 				commandsDir: path.join(__dirname, '../commands'),
-				testServers: [guildId],
+				//commandsDir: 'commands',
+				//testServers: [guildId],
 				showWarns: true,
 				del: 5,
 			}).setDefaultPrefix('gs')

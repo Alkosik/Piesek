@@ -8,8 +8,11 @@ var path = require('path');
 
 // Discord
 const Discord = require('discord.js');
+const myIntents = new Discord.Intents();
+myIntents.add(Discord.Intents.FLAGS.GUILD_PRESENCES, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILD_MESSAGES);
 const client = new Discord.Client({
     partials: ['MESSAGE', 'REACTION'],
+    intents: myIntents
 });
 const prefix = require('./config.json');
 
@@ -284,7 +287,10 @@ passport.deserializeUser((id, cb) => {
 
 app.post('/testme', (req, res) => {
     console.log(client.user.tag);
-    client.channels.cache.get(test_channel_id).send(`API Test initiated.`);
+    const sadge = message.guild.emojis.cache.find(emoji => emoji.name === 'Sadge');
+    let main_channel_id = '510941195929649153';
+    client.channels.cache.get(main_channel_id).send(`No... To ten... Fajnie było...`);
+    client.channels.cache.get(main_channel_id).send(`papa ${sadge}`);
 });
 
 const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
@@ -328,8 +334,9 @@ server.listen(process.env.PORT, () => {
 });
 
 //#region client.on('message)
-client.on('message', message => {
-    //#region Link detection
+client.on('messageCreate', message => {
+    if (!message.content.startsWith(prefix) && !message.author.bot) {
+        //#region Link detection
     (async () => {
         if (message.content.includes('discord.gg/' || 'discordapp.com/invite/')) {
             const warnmsg = new Discord.MessageEmbed()
@@ -349,8 +356,6 @@ client.on('message', message => {
         }
     })();
     //#endregion
-
-    if (!message.content.startsWith(prefix) && !message.author.bot) {
         connection.query(`SELECT * FROM account WHERE id = ${message.author.id}`, function (err, rows) {
             if (err) {
                 client.channels.cache.get(test_channel_id).send(`**A database error detected during initialization:**`);
@@ -546,7 +551,7 @@ client.on('message', message => {
 
 })
 
-client.on('message', message => {
+client.on('messageCreate', message => {
     if (message.content === '!join') {
         client.emit('guildMemberAdd', message.member);
     }

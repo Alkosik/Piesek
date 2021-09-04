@@ -4,7 +4,7 @@ module.exports = {
 	description: 'Fikołek!',
     slash: true,
     testOnly: false,
-	callback: ({}) => {
+	callback: ({ interaction }) => {
 		return 'https://tenor.com/view/flip-funny-fail-ouch-gif-14542095'
     }
 };
