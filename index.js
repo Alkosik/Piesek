@@ -287,7 +287,7 @@ passport.deserializeUser((id, cb) => {
 
 app.post('/testme', (req, res) => {
     console.log(client.user.tag);
-    const sadge = message.guild.emojis.cache.find(emoji => emoji.name === 'Sadge');
+    const sadge = client.emojis.cache.find(emoji => emoji.name === 'Sadge');
     let main_channel_id = '510941195929649153';
     client.channels.cache.get(main_channel_id).send(`No... To ten... Fajnie było...`);
     client.channels.cache.get(main_channel_id).send(`papa ${sadge}`);
